@@ -828,7 +828,7 @@ body {
     border-top: 1px solid rgba(58, 61, 69, 0.6);
     display: flex;
     justify-content: space-around;
-    padding: 10px 0 12px 0;
+    padding: 6px 0 8px 0;
     z-index: 100;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
@@ -865,19 +865,18 @@ body {
     height: 30px;
     object-fit: contain;
     opacity: 0.4;
-    filter: grayscale(1) brightness(0.8);
+    filter: grayscale(1) brightness(0.7);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-item.active .nav-icon-img {
     opacity: 1;
     filter: 
-        grayscale(0)
-        brightness(1.2)
-        hue-rotate(150deg)
-        saturate(1.5)
-        drop-shadow(0 0 8px rgba(0, 196, 140, 0.5))
-        drop-shadow(0 0 14px rgba(0, 196, 140, 0.3));
+        brightness(0)
+        drop-shadow(0 0 0px #00c48c)
+        drop-shadow(0 0 8px rgba(0, 196, 140, 0.8))
+        drop-shadow(0 0 16px rgba(0, 196, 140, 0.5))
+        invert(70%) sepia(100%) saturate(500%) hue-rotate(120deg);
     transform: translateY(-1px);
 }
 
