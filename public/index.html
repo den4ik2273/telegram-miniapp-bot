@@ -161,6 +161,17 @@
                 </div>
             </div>
 
+            <!-- My Gifts Page -->
+            <div class="page" id="giftsPage">
+                <h2 class="page-title">My gifts</h2>
+                
+                <div class="empty-state">
+                    <span class="empty-icon">🎁</span>
+                    <p>У вас пока нет подарков</p>
+                    <button class="btn-primary" onclick="showPage('homePage')">Перейти в магазин</button>
+                </div>
+            </div>
+
             <!-- Profile Page -->
             <div class="page" id="profilePage">
                 <button class="back-btn" id="profileBackBtn">← Назад</button>
@@ -215,24 +226,16 @@
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <button class="nav-item active" data-page="homePage">
-                <span class="nav-icon">🏠</span>
-                <span class="nav-label">Главная</span>
+                <img src="logo.png" alt="Market" class="nav-icon-img">
+                <span class="nav-label">Market</span>
             </button>
-            <button class="nav-item" data-page="catalogPage">
-                <span class="nav-icon">📦</span>
-                <span class="nav-label">Каталог</span>
-            </button>
-            <button class="nav-item" data-page="addPage">
-                <span class="nav-icon">➕</span>
-                <span class="nav-label">Добавить</span>
-            </button>
-            <button class="nav-item" data-page="ordersPage">
-                <span class="nav-icon">📋</span>
-                <span class="nav-label">Заказы</span>
+            <button class="nav-item" data-page="giftsPage">
+                <img src="gift123.png" alt="My gifts" class="nav-icon-img">
+                <span class="nav-label">My gifts</span>
             </button>
             <button class="nav-item" data-page="profilePage">
-                <span class="nav-icon">👤</span>
-                <span class="nav-label">Профиль</span>
+                <img src="Profile.png" alt="Profile" class="nav-icon-img">
+                <span class="nav-label">Profile</span>
             </button>
         </nav>
     </div>
