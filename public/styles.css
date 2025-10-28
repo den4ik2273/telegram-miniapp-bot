@@ -881,13 +881,13 @@ body {
 
 /* Увеличиваем логотип для баланса */
 .nav-item:first-child .nav-icon-img {
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
 }
 
 /* Компенсируем разницу в размере через отрицательный margin */
 .nav-item:first-child .nav-icon {
-    margin-bottom: -3px;
+    margin-bottom: -6px;
 }
 
 .nav-item.active .nav-icon-img {
