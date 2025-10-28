@@ -861,11 +861,11 @@ body {
 }
 
 .nav-icon-img {
-    width: 26px;
-    height: 26px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
-    opacity: 0.5;
-    filter: grayscale(0.3);
+    opacity: 0.4;
+    filter: grayscale(1) brightness(0.8);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -873,9 +873,11 @@ body {
     opacity: 1;
     filter: 
         grayscale(0)
-        brightness(1.1)
-        drop-shadow(0 0 8px rgba(0, 196, 140, 0.6))
-        drop-shadow(0 0 16px rgba(0, 196, 140, 0.3));
+        brightness(1.2)
+        hue-rotate(150deg)
+        saturate(1.5)
+        drop-shadow(0 0 8px rgba(0, 196, 140, 0.5))
+        drop-shadow(0 0 14px rgba(0, 196, 140, 0.3));
     transform: translateY(-1px);
 }
 
