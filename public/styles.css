@@ -13,7 +13,7 @@
     --accent-green: #00c48c;
     --accent-green-hover: #00b37d;
     --text-primary: #ffffff;
-    --text-secondary: #a3a6ad;
+    --text-secondary: #6b6e75;
     --text-muted: #6b6e75;
     --border-color: #3a3d45;
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -841,7 +841,7 @@ body {
     padding: 4px 12px;
     background: none;
     border: none;
-    color: #8e8e93;
+    color: #6b6e75;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     flex: 1;
