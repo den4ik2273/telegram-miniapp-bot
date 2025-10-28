@@ -67,13 +67,11 @@ body {
     height: 100%;
     object-fit: contain;
     filter: 
-        brightness(1.5) 
-        contrast(1.5) 
-        drop-shadow(0 0 20px rgba(0, 196, 140, 0.8))
-        drop-shadow(0 0 40px rgba(0, 196, 140, 0.6))
-        drop-shadow(0 0 60px rgba(0, 196, 140, 0.4));
+        drop-shadow(0 0 15px rgba(0, 196, 140, 1))
+        drop-shadow(0 0 30px rgba(0, 196, 140, 0.8))
+        drop-shadow(0 0 50px rgba(0, 196, 140, 0.6))
+        drop-shadow(0 0 80px rgba(0, 196, 140, 0.4));
     animation: logoPulse 2s ease-in-out infinite;
-    mix-blend-mode: screen;
 }
 
 .logo-glow {
@@ -242,8 +240,6 @@ body {
     width: 40px;
     height: 40px;
     object-fit: contain;
-    filter: brightness(1.4) contrast(1.4);
-    mix-blend-mode: screen;
 }
 
 .logo-text {
