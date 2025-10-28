@@ -869,6 +869,12 @@ body {
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Увеличиваем логотип для баланса */
+.nav-item:first-child .nav-icon-img {
+    width: 36px;
+    height: 36px;
+}
+
 .nav-item.active .nav-icon-img {
     opacity: 1;
     filter: 
