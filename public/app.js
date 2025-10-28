@@ -1,190 +1,284 @@
 // Инициализация Telegram Web App
 const tg = window.Telegram.WebApp;
-
-// Расширяем приложение на весь экран
 tg.expand();
+tg.ready();
 
-// Включаем главную кнопку
-tg.MainButton.text = "Закрыть приложение";
-tg.MainButton.show();
-
-// Обработчик главной кнопки
-tg.MainButton.onClick(() => {
-    tg.close();
-});
-
-// Получаем данные пользователя
+// Данные пользователя
 const user = tg.initDataUnsafe?.user;
 
-// Функция для отображения информации о пользователе
+// Состояние приложения
+let cart = [];
+let selectedCategory = 'all';
+let currentProduct = null;
+
+// Примерные товары
+const products = [
+    { id: 1, name: 'Steam Аккаунт', price: 500, category: 'accounts', seller: 'TopSeller', rating: 4.9, icon: '🎮', description: 'Аккаунт Steam с играми', specs: { Игр: '50+', Уровень: '20', Статус: 'Активен' } },
+    { id: 2, name: 'Discord Nitro', price: 350, category: 'services', seller: 'FastDelivery', rating: 4.8, icon: '💬', description: 'Discord Nitro на 1 месяц', specs: { Срок: '1 месяц', Доставка: 'Моментально', Гарантия: '7 дней' } },
+    { id: 3, name: 'Spotify Premium', price: 200, category: 'services', seller: 'MusicShop', rating: 4.7, icon: '🎵', description: 'Подписка Spotify Premium', specs: { Срок: '1 месяц', Страна: 'RU', Гарантия: '30 дней' } },
+    { id: 4, name: 'Minecraft Account', price: 450, category: 'games', seller: 'GameStore', rating: 4.9, icon: '⛏️', description: 'Лицензионный аккаунт Minecraft', specs: { Доступ: 'Полный', Версия: 'Java Edition', Статус: 'Активен' } },
+    { id: 5, name: 'VPN Premium', price: 300, category: 'software', seller: 'SecureNet', rating: 4.6, icon: '🔒', description: 'VPN подписка на 1 месяц', specs: { Срок: '1 месяц', Скорость: 'Безлимит', Серверы: '50+' } },
+    { id: 6, name: 'ChatGPT Plus', price: 800, category: 'services', seller: 'AIShop', rating: 4.9, icon: '🤖', description: 'Подписка ChatGPT Plus', specs: { Срок: '1 месяц', Модель: 'GPT-4', Статус: 'Активна' } },
+    { id: 7, name: 'Adobe Account', price: 1200, category: 'software', seller: 'CreativeStore', rating: 4.8, icon: '🎨', description: 'Adobe Creative Cloud', specs: { Срок: '1 год', Программы: 'Все', Обновления: 'Автоматические' } },
+    { id: 8, name: 'YouTube Premium', price: 250, category: 'services', seller: 'MediaHub', rating: 4.7, icon: '📺', description: 'YouTube Premium подписка', specs: { Срок: '1 месяц', Реклама: 'Отключена', Музыка: 'Включена' } },
+];
+
+// Инициализация
+function init() {
+    displayUserInfo();
+    renderProducts();
+    setupEventListeners();
+    updateCartBadge();
+}
+
+// Отображение информации о пользователе
 function displayUserInfo() {
     const userNameElement = document.getElementById('userName');
-    const userIdElement = document.getElementById('userId');
-    const avatarElement = document.getElementById('avatar');
+    const userAvatarElement = document.getElementById('userAvatar');
+    const profileNameElement = document.getElementById('profileName');
+    const profileIdElement = document.getElementById('profileId');
+    const profileAvatarElement = document.getElementById('profileAvatar');
 
     if (user) {
         const firstName = user.first_name || 'Пользователь';
         const lastName = user.last_name || '';
         const fullName = `${firstName} ${lastName}`.trim();
+        const initial = firstName[0]?.toUpperCase() || '👤';
         
         userNameElement.textContent = fullName;
-        userIdElement.textContent = `ID: ${user.id}`;
+        userAvatarElement.textContent = initial;
         
-        // Показываем первую букву имени как аватар
-        if (user.first_name) {
-            avatarElement.textContent = user.first_name[0].toUpperCase();
-        }
-    } else {
-        userNameElement.textContent = 'Гость';
-        userIdElement.textContent = 'Режим предварительного просмотра';
+        if (profileNameElement) profileNameElement.textContent = fullName;
+        if (profileIdElement) profileIdElement.textContent = `ID: ${user.id}`;
+        if (profileAvatarElement) profileAvatarElement.textContent = initial;
     }
 }
 
-// Функция для отображения информации о Web App
-function displayWebAppInfo() {
-    document.getElementById('version').textContent = tg.version || 'N/A';
-    document.getElementById('platform').textContent = tg.platform || 'unknown';
-    document.getElementById('colorScheme').textContent = tg.colorScheme || 'light';
+// Отображение товаров
+function renderProducts(category = 'all') {
+    const grid = document.getElementById('productsGrid');
+    const filteredProducts = category === 'all' 
+        ? products 
+        : products.filter(p => p.category === category);
+    
+    grid.innerHTML = filteredProducts.map(product => `
+        <div class="product-card" data-id="${product.id}">
+            <div class="product-image-container">
+                ${product.icon}
+            </div>
+            <div class="product-name">${product.name}</div>
+            <div class="product-seller-name">👤 ${product.seller}</div>
+            <div class="product-bottom">
+                <div class="product-price-value">${product.price} ₽</div>
+                <div class="product-rating">⭐ ${product.rating}</div>
+            </div>
+        </div>
+    `).join('');
+    
+    // Добавляем обработчики
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const id = parseInt(card.dataset.id);
+            showProduct(id);
+        });
+    });
 }
 
-// Применяем цветовую схему Telegram
+// Показать детальную страницу товара
+function showProduct(productId) {
+    currentProduct = products.find(p => p.id === productId);
+    if (!currentProduct) return;
+    
+    document.getElementById('productTitle').textContent = currentProduct.name;
+    document.getElementById('productPrice').textContent = `${currentProduct.price} ₽`;
+    document.getElementById('productImage').textContent = currentProduct.icon;
+    document.getElementById('productDescription').textContent = currentProduct.description;
+    
+    // Характеристики
+    const specsHtml = Object.entries(currentProduct.specs).map(([key, value]) => `
+        <div class="spec-item">
+            <strong>${key}:</strong>
+            <span>${value}</span>
+        </div>
+    `).join('');
+    document.getElementById('productSpecs').innerHTML = specsHtml;
+    
+    showPage('productPage');
+    
+    // Haptic feedback
+    if (tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('light');
+    }
+}
+
+// Навигация между страницами
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+    
+    // Обновляем активную кнопку навигации
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.page === pageId) {
+            item.classList.add('active');
+        }
+    });
+    
+    // Скроллим вверх
+    window.scrollTo(0, 0);
+}
+
+// Добавить в корзину
+function addToCart(product) {
+    cart.push(product);
+    updateCartBadge();
+    tg.showAlert(`${product.name} добавлен в корзину! 🛒`);
+    
+    if (tg.HapticFeedback) {
+        tg.HapticFeedback.notificationOccurred('success');
+    }
+}
+
+// Обновить счетчик корзины
+function updateCartBadge() {
+    const badge = document.getElementById('cartBadge');
+    badge.textContent = cart.length;
+    badge.style.display = cart.length > 0 ? 'flex' : 'none';
+}
+
+// Показать корзину
+function showCart() {
+    const cartItems = document.getElementById('cartItems');
+    const cartSummary = document.getElementById('cartSummary');
+    
+    if (cart.length === 0) {
+        cartItems.innerHTML = `
+            <div class="empty-state">
+                <span class="empty-icon">🛒</span>
+                <p>Корзина пуста</p>
+                <button class="btn-primary" onclick="showPage('homePage')">Продолжить покупки</button>
+            </div>
+        `;
+        cartSummary.style.display = 'none';
+    } else {
+        // Отображаем товары в корзине
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        cartItems.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <span>${item.icon}</span>
+                <div>
+                    <div>${item.name}</div>
+                    <div>${item.price} ₽</div>
+                </div>
+            </div>
+        `).join('');
+        
+        document.getElementById('cartSubtotal').textContent = `${total} ₽`;
+        document.getElementById('cartTotal').textContent = `${total} ₽`;
+        cartSummary.style.display = 'block';
+    }
+    
+    showPage('cartPage');
+}
+
+// Настройка обработчиков событий
+function setupEventListeners() {
+    // Категории
+    document.querySelectorAll('.category-item').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+            
+            const category = item.dataset.category;
+            selectedCategory = category;
+            renderProducts(category);
+            
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+        });
+    });
+    
+    // Навигация
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const pageId = item.dataset.page;
+            if (pageId) showPage(pageId);
+            
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+        });
+    });
+    
+    // Кнопка назад на странице товара
+    document.getElementById('backBtn').addEventListener('click', () => {
+        showPage('homePage');
+    });
+    
+    document.getElementById('cartBackBtn').addEventListener('click', () => {
+        showPage('homePage');
+    });
+    
+    document.getElementById('profileBackBtn').addEventListener('click', () => {
+        showPage('homePage');
+    });
+    
+    // Кнопка покупки
+    document.getElementById('buyBtn').addEventListener('click', () => {
+        if (currentProduct) {
+            addToCart(currentProduct);
+        }
+    });
+    
+    // Кнопка корзины в header
+    document.getElementById('cartBtn').addEventListener('click', () => {
+        showCart();
+    });
+    
+    // Кнопка поиска
+    document.getElementById('searchBtn').addEventListener('click', () => {
+        tg.showAlert('Функция поиска в разработке 🔍');
+    });
+    
+    // Главная кнопка Telegram
+    tg.MainButton.text = "Закрыть";
+    tg.MainButton.onClick(() => {
+        tg.close();
+    });
+    tg.MainButton.show();
+}
+
+// Применяем тему Telegram
 function applyTheme() {
     const root = document.documentElement;
     
     if (tg.themeParams) {
         if (tg.themeParams.bg_color) {
-            root.style.setProperty('--tg-theme-bg-color', tg.themeParams.bg_color);
-        }
-        if (tg.themeParams.text_color) {
-            root.style.setProperty('--tg-theme-text-color', tg.themeParams.text_color);
-        }
-        if (tg.themeParams.hint_color) {
-            root.style.setProperty('--tg-theme-hint-color', tg.themeParams.hint_color);
-        }
-        if (tg.themeParams.button_color) {
-            root.style.setProperty('--tg-theme-button-color', tg.themeParams.button_color);
-            root.style.setProperty('--primary-color', tg.themeParams.button_color);
-        }
-        if (tg.themeParams.button_text_color) {
-            root.style.setProperty('--tg-theme-button-text-color', tg.themeParams.button_text_color);
-        }
-        if (tg.themeParams.secondary_bg_color) {
-            root.style.setProperty('--tg-theme-secondary-bg-color', tg.themeParams.secondary_bg_color);
+            root.style.setProperty('--tg-bg', tg.themeParams.bg_color);
         }
     }
 }
 
-// Обработчики кнопок действий
-document.getElementById('actionBtn1').addEventListener('click', () => {
-    tg.showAlert('Вы нажали на Действие 1! 🎯');
-    
-    // Отправляем данные боту
-    tg.sendData(JSON.stringify({
-        action: 'action1',
-        userId: user?.id,
-        timestamp: Date.now()
-    }));
-});
-
-document.getElementById('actionBtn2').addEventListener('click', () => {
-    tg.showConfirm('Вы уверены, что хотите выполнить Действие 2?', (confirmed) => {
-        if (confirmed) {
-            tg.showAlert('Действие 2 выполнено! 🎨');
+// Обработка вибрации для всех кнопок
+document.addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+        if (tg.HapticFeedback) {
+            tg.HapticFeedback.impactOccurred('light');
         }
-    });
-});
-
-document.getElementById('actionBtn3').addEventListener('click', () => {
-    // Показываем popup
-    tg.showPopup({
-        title: 'Действие 3',
-        message: 'Это всплывающее окно Telegram Web App!',
-        buttons: [
-            { id: 'ok', type: 'ok' },
-            { id: 'cancel', type: 'cancel' }
-        ]
-    }, (buttonId) => {
-        if (buttonId === 'ok') {
-            tg.showAlert('Успешно! ✨');
-        }
-    });
-});
-
-// Обработчик кнопки отправки обратной связи
-document.getElementById('sendBtn').addEventListener('click', () => {
-    const feedbackText = document.getElementById('feedbackInput').value.trim();
-    
-    if (!feedbackText) {
-        tg.showAlert('Пожалуйста, введите сообщение');
-        return;
     }
-    
-    // Отправляем данные боту
-    tg.sendData(JSON.stringify({
-        type: 'feedback',
-        message: feedbackText,
-        userId: user?.id,
-        timestamp: Date.now()
-    }));
-    
-    tg.showAlert('Сообщение отправлено! 💬');
-    document.getElementById('feedbackInput').value = '';
 });
 
-// Обработка события отправки данных
-tg.onEvent('mainButtonClicked', () => {
-    console.log('Main button clicked');
-});
-
-// Уведомляем Telegram, что приложение готово
-tg.ready();
-
-// Инициализация
+// Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', () => {
-    displayUserInfo();
-    displayWebAppInfo();
+    init();
     applyTheme();
-    
-    console.log('Telegram Web App initialized');
-    console.log('User:', user);
-    console.log('Init Data:', tg.initDataUnsafe);
+    console.log('Market Mini App initialized');
 });
 
 // Обработка изменения темы
 tg.onEvent('themeChanged', () => {
-    console.log('Theme changed');
     applyTheme();
 });
-
-// Функция для отправки запроса на сервер
-async function sendToServer(data) {
-    try {
-        const response = await fetch('/api/user-data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                initData: tg.initData,
-                data: data
-            })
-        });
-        
-        const result = await response.json();
-        console.log('Server response:', result);
-        return result;
-    } catch (error) {
-        console.error('Error sending to server:', error);
-        tg.showAlert('Ошибка отправки данных на сервер');
-    }
-}
-
-// Добавляем вибрацию при нажатии на кнопки (если доступна)
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', () => {
-        if (tg.HapticFeedback) {
-            tg.HapticFeedback.impactOccurred('medium');
-        }
-    });
-});
-
