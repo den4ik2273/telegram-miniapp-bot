@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Telegram Mini App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚀 Mini App</h1>
+            <p class="subtitle">Ваше приложение в Telegram</p>
+        </header>
+
+        <div class="user-info" id="userInfo">
+            <div class="info-card">
+                <div class="avatar" id="avatar">👤</div>
+                <div class="user-details">
+                    <h2 id="userName">Загрузка...</h2>
+                    <p id="userId">ID: ---</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <h3>📊 Статистика</h3>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-value">42</span>
+                        <span class="stat-label">Очки</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">15</span>
+                        <span class="stat-label">Уровень</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">99</span>
+                        <span class="stat-label">Достижения</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>⚡ Действия</h3>
+                <div class="actions">
+                    <button class="btn btn-primary" id="actionBtn1">
+                        <span class="btn-icon">🎯</span>
+                        Действие 1
+                    </button>
+                    <button class="btn btn-secondary" id="actionBtn2">
+                        <span class="btn-icon">🎨</span>
+                        Действие 2
+                    </button>
+                    <button class="btn btn-success" id="actionBtn3">
+                        <span class="btn-icon">✨</span>
+                        Действие 3
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>💬 Обратная связь</h3>
+                <textarea 
+                    class="feedback-input" 
+                    id="feedbackInput" 
+                    placeholder="Введите ваше сообщение..."
+                    rows="3"
+                ></textarea>
+                <button class="btn btn-primary btn-block" id="sendBtn">
+                    Отправить в чат
+                </button>
+            </div>
+
+            <div class="card info-section">
+                <h3>ℹ️ Информация о Telegram Web App</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>Версия:</strong>
+                        <span id="version">---</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Платформа:</strong>
+                        <span id="platform">---</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Цветовая схема:</strong>
+                        <span id="colorScheme">---</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Создано с ❤️ для Telegram</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

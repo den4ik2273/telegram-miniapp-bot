@@ -1,0 +1,32 @@
+{
+  "name": "telegram-miniapp-bot",
+  "version": "1.0.0",
+  "description": "Telegram Bot with MiniApp",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "nodemon bot.js",
+    "start:tunnel": "node start-all.js",
+    "start:ngrok": "node start-ngrok.js",
+    "start:cloudflare": "node start-cloudflare.js",
+    "start:bore": "node start-bore.js"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "miniapp"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ngrok/ngrok": "^1.5.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "localtunnel": "^2.0.2",
+    "node-telegram-bot-api": "^0.66.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
