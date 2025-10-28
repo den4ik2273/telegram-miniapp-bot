@@ -8,6 +8,11 @@ const token = process.env.BOT_TOKEN;
 const miniAppUrl = process.env.MINIAPP_URL;
 const port = process.env.PORT || 3000;
 
+console.log('🔧 Переменные окружения:');
+console.log('  BOT_TOKEN:', token ? '✓ установлен' : '✗ НЕ установлен');
+console.log('  MINIAPP_URL:', miniAppUrl);
+console.log('  PORT:', port);
+
 // Создаем бота
 const bot = new TelegramBot(token, { polling: true });
 
@@ -15,6 +20,13 @@ const bot = new TelegramBot(token, { polling: true });
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Логируем все входящие запросы
+app.use((req, res, next) => {
+  console.log(`📨 ${req.method} ${req.url}`);
+  next();
+});
+
 app.use(express.static('public'));
 
 // API endpoint для получения данных пользователя
@@ -28,6 +40,11 @@ app.post('/api/user-data', (req, res) => {
     success: true,
     message: 'Данные получены'
   });
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // Главная страница Mini App
