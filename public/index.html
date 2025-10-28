@@ -8,12 +8,26 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="app">
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Lolz.Team" class="splash-logo">
+                <div class="logo-glow"></div>
+            </div>
+            <div class="splash-text">LOLZ MARKET</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app" id="mainApp">
         <!-- Header -->
         <header class="header">
             <div class="header-content">
                 <div class="logo">
-                    <span class="logo-icon">🛍️</span>
+                    <img src="logo.png" alt="Lolz.Team" class="logo-image">
                     <span class="logo-text">Market</span>
                 </div>
                 <div class="header-actions">

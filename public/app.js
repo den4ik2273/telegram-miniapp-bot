@@ -271,11 +271,28 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// Управление Splash Screen
+function hideSplashScreen() {
+    const splashScreen = document.getElementById('splashScreen');
+    const mainApp = document.getElementById('mainApp');
+    
+    setTimeout(() => {
+        splashScreen.classList.add('hidden');
+        mainApp.style.opacity = '1';
+    }, 3000);
+}
+
 // Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', () => {
-    init();
-    applyTheme();
-    console.log('Market Mini App initialized');
+    // Запускаем splash screen
+    hideSplashScreen();
+    
+    // Инициализируем приложение
+    setTimeout(() => {
+        init();
+        applyTheme();
+        console.log('Market Mini App initialized');
+    }, 2500);
 });
 
 // Обработка изменения темы
