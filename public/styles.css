@@ -837,7 +837,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
     gap: 4px;
     padding: 4px 12px;
     background: none;
@@ -847,7 +846,6 @@ body {
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     flex: 1;
     position: relative;
-    height: 56px;
 }
 
 .nav-item.active {
@@ -885,6 +883,11 @@ body {
 .nav-item:first-child .nav-icon-img {
     width: 36px;
     height: 36px;
+}
+
+/* Компенсируем разницу в размере через отрицательный margin */
+.nav-item:first-child .nav-icon {
+    margin-bottom: -3px;
 }
 
 .nav-item.active .nav-icon-img {
