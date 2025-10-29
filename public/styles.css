@@ -1233,50 +1233,15 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 10px;
-}
-
-.transfer-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0;
     overflow: hidden;
-}
-
-.transfer-icon.gift-icon {
-    background: linear-gradient(135deg, var(--accent-green), #00d9a5);
-}
-
-.transfer-avatar {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.transfer-arrow {
-    font-size: 32px;
-    color: var(--text-secondary);
-    font-weight: 300;
-}
-
-.gift-transfer-labels {
-    display: flex;
-    justify-content: space-around;
     margin-bottom: 18px;
 }
 
-.transfer-label {
-    font-size: 13px;
-    color: var(--text-secondary);
-    font-weight: 500;
+.gift-banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .gift-instructions {
