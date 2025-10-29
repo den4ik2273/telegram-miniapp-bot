@@ -249,6 +249,15 @@ function setupEventListeners() {
         }
     });
     
+    // Кнопка "Как добавить подарок?"
+    document.getElementById('howToAddGiftBtn').addEventListener('click', () => {
+        tg.showAlert('💝 Как получить подарки:\n\n1. Пополните баланс через Telegram Stars\n2. Выберите понравившийся NFT подарок в каталоге\n3. Купите его - и он появится в разделе "My gifts"\n4. Дарите друзьям или коллекционируйте! 🎁');
+        
+        if (tg.HapticFeedback) {
+            tg.HapticFeedback.impactOccurred('light');
+        }
+    });
+    
     // Кнопка назад на странице пополнения
     document.getElementById('addBalanceBackBtn').addEventListener('click', () => {
         showPage('homePage');

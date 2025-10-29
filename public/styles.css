@@ -1088,6 +1088,33 @@ body {
     box-shadow: none;
 }
 
+/* How to Add Gift Button */
+.btn-how-to-add {
+    margin-top: 20px;
+    background: linear-gradient(135deg, var(--accent-green), #00e5a0);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 196, 140, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-how-to-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 196, 140, 0.4);
+}
+
+.btn-how-to-add:active {
+    transform: translateY(0px);
+}
+
 /* Bottom Navigation */
 .bottom-nav {
     position: fixed;
