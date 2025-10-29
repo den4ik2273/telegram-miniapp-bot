@@ -1263,30 +1263,21 @@ body {
     position: relative;
     background: none;
     border: none;
-    color: #6b6e75;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 0px 12px;
+    padding: 8px 12px;
     flex: 1;
-    height: 50px;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-}
-
-.nav-item.active {
-    color: var(--accent-green);
 }
 
 .nav-item:active {
     transform: scale(0.95);
 }
 
-/* Слой 1: Иконки (фоновый слой) */
+/* Иконки */
 .nav-icon {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1300,38 +1291,23 @@ body {
     display: block;
 }
 
-/* Индивидуальное выравнивание иконок по их визуальному центру */
-
-/* Market (logo) - 48px */
-.nav-item:first-child .nav-icon {
-    top: 1px; /* Центр на 24px от верха иконки, выравниваем по центру полоски */
-}
-
+/* Размеры иконок */
 .nav-item:first-child .nav-icon-img {
-    width: 48px;
-    height: 48px;
-}
-
-/* My gifts - 36px */
-.nav-item:nth-child(2) .nav-icon {
-    top: 7px; /* Центр на 18px от верха иконки */
+    width: 40px;
+    height: 40px;
 }
 
 .nav-item:nth-child(2) .nav-icon-img {
-    width: 36px;
-    height: 36px;
-}
-
-/* Profile - 30px */
-.nav-item:nth-child(3) .nav-icon {
-    top: 10px; /* Центр на 15px от верха иконки */
+    width: 32px;
+    height: 32px;
 }
 
 .nav-item:nth-child(3) .nav-icon-img {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
 }
 
+/* Активное состояние */
 .nav-item.active .nav-icon-img {
     opacity: 1;
     filter: 
@@ -1341,23 +1317,6 @@ body {
         drop-shadow(0 0 16px rgba(0, 196, 140, 0.5))
         invert(70%) sepia(100%) saturate(500%) hue-rotate(120deg);
     transform: translateY(-1px);
-}
-
-/* Слой 2: Текст (верхний слой) */
-.nav-label {
-    font-size: 8px;
-    font-weight: 500;
-    letter-spacing: 0.1px;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    line-height: 1;
-    position: relative;
-    z-index: 1;
-    padding-bottom: 2px;
-}
-
-.nav-item.active .nav-label {
-    font-weight: 600;
 }
 
 /* Animations */
