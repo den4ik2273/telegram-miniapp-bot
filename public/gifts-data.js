@@ -43,4 +43,53 @@ const products = [
     { id: 31, name: 'Top Hat', price: 14500, icon: '🎩', image: 'Подарки/TopHat-14500.png', description: 'Collectible #3004', specs: { Model: 'Top Hat 1.5%', Backdrop: 'Elite 1.8%', Symbol: 'Prestige 1.5%' } },
     { id: 32, name: 'Vintage Cigar', price: 21000, icon: '🚬', image: 'Подарки/VintageCigar-21000.png', description: 'Collectible #3005', specs: { Model: 'Vintage Cigar 1.5%', Backdrop: 'Rare 1.5%', Symbol: 'Aged 1.5%' } },
     { id: 33, name: 'Astral Shard', price: 31000, icon: '💎', image: 'Подарки/AstralShard-31000.png', description: 'Collectible #3006', specs: { Model: 'Astral Shard 1.5%', Backdrop: 'Cosmic 1.5%', Symbol: 'Crystal 1.5%' } },
+    
+    // ========== НОВЫЕ ПОДАРКИ - 37 шт ==========
+    
+    // Desk Calendar (200-300₽) - 12 шт
+    { id: 34, name: 'Desk Calendar', price: 210, icon: '📅', image: 'Подарки/DeskCalendar1.png', description: 'Collectible #4001', specs: { Model: 'Desk Calendar 15%', Backdrop: 'Office 22%', Symbol: 'Time 8%' } },
+    { id: 35, name: 'Desk Calendar', price: 225, icon: '📅', image: 'Подарки/DeskCalendar2.png', description: 'Collectible #4002', specs: { Model: 'Desk Calendar 14%', Backdrop: 'Work 21%', Symbol: 'Date 7.5%' } },
+    { id: 36, name: 'Desk Calendar', price: 235, icon: '📅', image: 'Подарки/DeskCalendar3.png', description: 'Collectible #4003', specs: { Model: 'Desk Calendar 14%', Backdrop: 'Business 20%', Symbol: 'Plan 7%' } },
+    { id: 37, name: 'Desk Calendar', price: 245, icon: '📅', image: 'Подарки/DeskCalendar4.png', description: 'Collectible #4004', specs: { Model: 'Desk Calendar 13%', Backdrop: 'Paper 19%', Symbol: 'Month 6.5%' } },
+    { id: 38, name: 'Desk Calendar', price: 255, icon: '📅', image: 'Подарки/DeskCalendar5.png', description: 'Collectible #4005', specs: { Model: 'Desk Calendar 13%', Backdrop: 'Desktop 18%', Symbol: 'Year 6%' } },
+    { id: 39, name: 'Desk Calendar', price: 260, icon: '📅', image: 'Подарки/DeskCalendar6.png', description: 'Collectible #4006', specs: { Model: 'Desk Calendar 12%', Backdrop: 'Schedule 17%', Symbol: 'Week 5.5%' } },
+    { id: 40, name: 'Desk Calendar', price: 268, icon: '📅', image: 'Подарки/DeskCalendar7.png', description: 'Collectible #4007', specs: { Model: 'Desk Calendar 12%', Backdrop: 'Memo 16%', Symbol: 'Day 5%' } },
+    { id: 41, name: 'Desk Calendar', price: 275, icon: '📅', image: 'Подарки/DeskCalendar8.png', description: 'Collectible #4008', specs: { Model: 'Desk Calendar 11%', Backdrop: 'Planner 15%', Symbol: 'Event 4.5%' } },
+    { id: 42, name: 'Desk Calendar', price: 282, icon: '📅', image: 'Подарки/DeskCalendar9.png', description: 'Collectible #4009', specs: { Model: 'Desk Calendar 11%', Backdrop: 'Organize 14%', Symbol: 'Task 4%' } },
+    { id: 43, name: 'Desk Calendar', price: 288, icon: '📅', image: 'Подарки/DeskCalendar10.png', description: 'Collectible #4010', specs: { Model: 'Desk Calendar 10%', Backdrop: 'Grid 13%', Symbol: 'Note 3.5%' } },
+    { id: 44, name: 'Desk Calendar', price: 293, icon: '📅', image: 'Подарки/DeskCalendar11.png', description: 'Collectible #4011', specs: { Model: 'Desk Calendar 10%', Backdrop: 'Table 12%', Symbol: 'Mark 3%' } },
+    { id: 45, name: 'Desk Calendar', price: 298, icon: '📅', image: 'Подарки/DeskCalendar12.png', description: 'Collectible #4012', specs: { Model: 'Desk Calendar 9%', Backdrop: 'Desk 11%', Symbol: 'Pin 2.5%' } },
+    
+    // Hypno Lollipop (500-700₽) - 5 шт
+    { id: 46, name: 'Hypno Lollipop', price: 520, icon: '🍭', image: 'Подарки/HypnoLollipop1.png', description: 'Collectible #4013', specs: { Model: 'Hypno Lollipop 14%', Backdrop: 'Spiral 20%', Symbol: 'Sweet 7%' } },
+    { id: 47, name: 'Hypno Lollipop', price: 570, icon: '🍭', image: 'Подарки/HypnoLollipop2.png', description: 'Collectible #4014', specs: { Model: 'Hypno Lollipop 13%', Backdrop: 'Candy 19%', Symbol: 'Twist 6.5%' } },
+    { id: 48, name: 'Hypno Lollipop', price: 620, icon: '🍭', image: 'Подарки/HypnoLollipop3.png', description: 'Collectible #4015', specs: { Model: 'Hypno Lollipop 12%', Backdrop: 'Swirl 18%', Symbol: 'Sugar 6%' } },
+    { id: 49, name: 'Hypno Lollipop', price: 660, icon: '🍭', image: 'Подарки/HypnoLollipop4.png', description: 'Collectible #4016', specs: { Model: 'Hypno Lollipop 11%', Backdrop: 'Hypnotic 17%', Symbol: 'Trance 5.5%' } },
+    { id: 50, name: 'Hypno Lollipop', price: 695, icon: '🍭', image: 'Подарки/HypnoLollipop5.png', description: 'Collectible #4017', specs: { Model: 'Hypno Lollipop 10%', Backdrop: 'Mesmer 16%', Symbol: 'Magic 5%' } },
+    
+    // Big Year (900-1200₽) - 10 шт
+    { id: 51, name: 'Big Year', price: 920, icon: '🎆', image: 'Подарки/BigYear1.png', description: 'Collectible #4018', specs: { Model: 'Big Year 10%', Backdrop: 'Celebration 15%', Symbol: 'Firework 2.5%' } },
+    { id: 52, name: 'Big Year', price: 960, icon: '🎆', image: 'Подарки/BigYear2.png', description: 'Collectible #4019', specs: { Model: 'Big Year 9%', Backdrop: 'Party 14%', Symbol: 'Sparkle 2.2%' } },
+    { id: 53, name: 'Big Year', price: 1000, icon: '🎆', image: 'Подарки/BigYear3.png', description: 'Collectible #4020', specs: { Model: 'Big Year 8%', Backdrop: 'Festival 13%', Symbol: 'Blast 2%' } },
+    { id: 54, name: 'Big Year', price: 1040, icon: '🎆', image: 'Подарки/BigYear4.png', description: 'Collectible #4021', specs: { Model: 'Big Year 7%', Backdrop: 'Holiday 12%', Symbol: 'Boom 1.8%' } },
+    { id: 55, name: 'Big Year', price: 1075, icon: '🎆', image: 'Подарки/BigYear5.png', description: 'Collectible #4022', specs: { Model: 'Big Year 6%', Backdrop: 'Joy 11%', Symbol: 'Light 1.6%' } },
+    { id: 56, name: 'Big Year', price: 1105, icon: '🎆', image: 'Подарки/BigYear6.png', description: 'Collectible #4023', specs: { Model: 'Big Year 5%', Backdrop: 'Cheer 10%', Symbol: 'Flash 1.5%' } },
+    { id: 57, name: 'Big Year', price: 1135, icon: '🎆', image: 'Подарки/BigYear7.png', description: 'Collectible #4024', specs: { Model: 'Big Year 4%', Backdrop: 'Festive 9%', Symbol: 'Glow 1.5%' } },
+    { id: 58, name: 'Big Year', price: 1160, icon: '🎆', image: 'Подарки/BigYear8.png', description: 'Collectible #4025', specs: { Model: 'Big Year 3%', Backdrop: 'Happy 8%', Symbol: 'Star 1.5%' } },
+    { id: 59, name: 'Big Year', price: 1180, icon: '🎆', image: 'Подарки/BigYear9.png', description: 'Collectible #4026', specs: { Model: 'Big Year 2%', Backdrop: 'Bright 7%', Symbol: 'Shine 1.5%' } },
+    { id: 60, name: 'Big Year', price: 1195, icon: '🎆', image: 'Подарки/BigYear10.png', description: 'Collectible #4027', specs: { Model: 'Big Year 1.5%', Backdrop: 'Epic 6%', Symbol: 'Grand 1.5%' } },
+    
+    // Cookie Heart (1200-1400₽) - 5 шт
+    { id: 61, name: 'Cookie Heart', price: 1220, icon: '💝', image: 'Подарки/CookieHeart1.png', description: 'Collectible #4028', specs: { Model: 'Cookie Heart 9%', Backdrop: 'Love 14%', Symbol: 'Baked 2%' } },
+    { id: 62, name: 'Cookie Heart', price: 1270, icon: '💝', image: 'Подарки/CookieHeart2.png', description: 'Collectible #4029', specs: { Model: 'Cookie Heart 8%', Backdrop: 'Sweet 13%', Symbol: 'Heart 1.8%' } },
+    { id: 63, name: 'Cookie Heart', price: 1320, icon: '💝', image: 'Подарки/CookieHeart3.png', description: 'Collectible #4030', specs: { Model: 'Cookie Heart 7%', Backdrop: 'Valentine 12%', Symbol: 'Sugar 1.6%' } },
+    { id: 64, name: 'Cookie Heart', price: 1360, icon: '💝', image: 'Подарки/CookieHeart5.png', description: 'Collectible #4031', specs: { Model: 'Cookie Heart 6%', Backdrop: 'Romance 11%', Symbol: 'Frosting 1.5%' } },
+    { id: 65, name: 'Cookie Heart', price: 1390, icon: '💝', image: 'Подарки/CookieHeart6.png', description: 'Collectible #4032', specs: { Model: 'Cookie Heart 5%', Backdrop: 'Cute 10%', Symbol: 'Chocolate 1.5%' } },
+    
+    // Snoop Dogg (1400-1600₽) - 5 шт
+    { id: 66, name: 'Snoop Dogg', price: 1420, icon: '🎤', image: 'Подарки/SnoopDogg1.png', description: 'Collectible #4033', specs: { Model: 'Snoop Dogg 9%', Backdrop: 'Hip-Hop 13%', Symbol: 'Legend 2%' } },
+    { id: 67, name: 'Snoop Dogg', price: 1470, icon: '🎤', image: 'Подарки/SnoopDogg2.png', description: 'Collectible #4034', specs: { Model: 'Snoop Dogg 8%', Backdrop: 'Rap 12%', Symbol: 'Music 1.8%' } },
+    { id: 68, name: 'Snoop Dogg', price: 1520, icon: '🎤', image: 'Подарки/SnoopDogg3.png', description: 'Collectible #4035', specs: { Model: 'Snoop Dogg 7%', Backdrop: 'Street 11%', Symbol: 'Mic 1.6%' } },
+    { id: 69, name: 'Snoop Dogg', price: 1560, icon: '🎤', image: 'Подарки/SnoopDogg4.png', description: 'Collectible #4036', specs: { Model: 'Snoop Dogg 6%', Backdrop: 'West Coast 10%', Symbol: 'Beat 1.5%' } },
+    { id: 70, name: 'Snoop Dogg', price: 1590, icon: '🎤', image: 'Подарки/SnoopDogg5.png', description: 'Collectible #4037', specs: { Model: 'Snoop Dogg 5%', Backdrop: 'Gangsta 9%', Symbol: 'Rhyme 1.5%' } },
 ];
