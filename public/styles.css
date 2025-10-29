@@ -1323,23 +1323,23 @@ body {
 /* Индивидуальные размеры и выравнивание для каждой иконки */
 /* Market (logo.png) */
 .nav-item:first-child .nav-icon-img {
-    width: 38px;
-    height: 38px;
-    margin-top: 0px;
+    width: 42px;
+    height: 42px;
+    margin-top: -1px;
 }
 
 /* My gifts (gift123.png) */
 .nav-item:nth-child(2) .nav-icon-img {
     width: 32px;
     height: 32px;
-    margin-top: 3px;
+    margin-top: 4px;
 }
 
 /* Profile (Profile.png) */
 .nav-item:nth-child(3) .nav-icon-img {
-    width: 36px;
-    height: 36px;
-    margin-top: 1px;
+    width: 32px;
+    height: 32px;
+    margin-top: 4px;
 }
 
 /* Активное состояние */
