@@ -1310,6 +1310,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 40px; /* Фиксированная высота контейнера */
 }
 
 .nav-icon-img {
@@ -1318,22 +1319,8 @@ body {
     filter: grayscale(1) brightness(0.7);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     display: block;
-}
-
-/* Размеры иконок */
-.nav-item:first-child .nav-icon-img {
-    width: 40px;
-    height: 40px;
-}
-
-.nav-item:nth-child(2) .nav-icon-img {
-    width: 40px;
-    height: 40px;
-}
-
-.nav-item:nth-child(3) .nav-icon-img {
-    width: 28px;
-    height: 28px;
+    height: 100%; /* Заполняем всю высоту контейнера */
+    width: auto; /* Автоматическая ширина для сохранения пропорций */
 }
 
 /* Активное состояние */
