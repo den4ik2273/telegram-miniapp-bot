@@ -402,15 +402,23 @@ bot.onText(/\/start/, (msg) => {
     inline_keyboard: [
       [
         {
-          text: '🚀 Открыть Mini App',
+          text: '🛍️ Открыть Lolz Market',
           web_app: { url: miniAppUrl }
+        }
+      ],
+      [
+        {
+          text: '📢 Присоединитесь к каналу',
+          url: 'https://t.me/lolzteam'
         }
       ]
     ]
   };
   
-  bot.sendMessage(chatId, welcomeMessage, {
-    reply_markup: keyboard
+  const photoPath = path.join(__dirname, 'public', 'Start.png');
+  bot.sendPhoto(chatId, photoPath, { 
+    caption: welcomeMessage,
+    reply_markup: keyboard 
   });
 });
 
