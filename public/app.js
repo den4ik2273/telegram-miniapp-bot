@@ -80,7 +80,6 @@ function showProduct(productId) {
     document.getElementById('productTitle').textContent = currentProduct.name;
     document.getElementById('productPrice').textContent = `${currentProduct.price} ₽`;
     document.getElementById('productImage').textContent = currentProduct.icon;
-    document.getElementById('productDescription').textContent = currentProduct.description;
     
     // Характеристики
     const specsHtml = Object.entries(currentProduct.specs).map(([key, value]) => `
