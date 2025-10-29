@@ -256,7 +256,7 @@ function setupEventListeners() {
     // Кнопка покупки
     document.getElementById('buyBtn').addEventListener('click', () => {
         if (currentProduct) {
-            tg.showAlert('Недостаточно средств');
+            tg.showAlert('❌ Недостаточно средств');
         }
     });
     
