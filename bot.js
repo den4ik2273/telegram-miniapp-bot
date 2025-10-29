@@ -47,6 +47,46 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// API endpoint для получения фото профиля пользователя
+app.post('/api/get-user-photo', async (req, res) => {
+  try {
+    const { userId } = req.body;
+    
+    if (!userId) {
+      return res.json({ success: false, error: 'No userId provided' });
+    }
+    
+    // Получаем фотографии профиля пользователя
+    const photos = await bot.getUserProfilePhotos(userId, { limit: 1 });
+    
+    if (photos.total_count > 0 && photos.photos.length > 0) {
+      // Берем первое фото (самое актуальное)
+      const photo = photos.photos[0];
+      // Берем самое большое разрешение
+      const largestPhoto = photo[photo.length - 1];
+      
+      // Получаем ссылку на файл
+      const fileLink = await bot.getFileLink(largestPhoto.file_id);
+      
+      console.log(`📸 Got profile photo for user ${userId}: ${fileLink}`);
+      
+      res.json({
+        success: true,
+        photoUrl: fileLink
+      });
+    } else {
+      // У пользователя нет фото профиля
+      res.json({
+        success: true,
+        photoUrl: null
+      });
+    }
+  } catch (error) {
+    console.error('Error getting user photo:', error);
+    res.json({ success: false, error: error.message });
+  }
+});
+
 // API endpoint для создания инвойса Telegram Stars
 app.post('/api/create-invoice', async (req, res) => {
   try {

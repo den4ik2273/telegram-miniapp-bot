@@ -9,18 +9,20 @@ const user = tg.initDataUnsafe?.user;
 // Состояние приложения
 let selectedCategory = 'all';
 let currentProduct = null;
+let userBalance = 0;
 
 // Products массив загружается из gifts-data.js
 
 // Инициализация
 function init() {
+    loadUserBalance();
     displayUserInfo();
     renderProducts();
     setupEventListeners();
 }
 
 // Отображение информации о пользователе
-function displayUserInfo() {
+async function displayUserInfo() {
     const userNameElement = document.getElementById('userName');
     const userAvatarElement = document.getElementById('userAvatar');
     const profileNameElement = document.getElementById('profileName');
@@ -34,11 +36,87 @@ function displayUserInfo() {
         const initial = firstName[0]?.toUpperCase() || '👤';
         
         userNameElement.textContent = fullName;
-        userAvatarElement.textContent = initial;
         
         if (profileNameElement) profileNameElement.textContent = fullName;
         if (profileIdElement) profileIdElement.textContent = `ID: ${user.id}`;
-        if (profileAvatarElement) profileAvatarElement.textContent = initial;
+        
+        // Загружаем фото профиля
+        const photoUrl = await loadUserPhoto(user.id);
+        
+        if (photoUrl) {
+            // Если есть фото, отображаем его
+            userAvatarElement.innerHTML = `<img src="${photoUrl}" alt="Avatar" class="avatar-img">`;
+            if (profileAvatarElement) {
+                profileAvatarElement.innerHTML = `<img src="${photoUrl}" alt="Avatar" class="avatar-img">`;
+            }
+        } else {
+            // Если нет фото, показываем инициал
+            userAvatarElement.textContent = initial;
+            if (profileAvatarElement) {
+                profileAvatarElement.textContent = initial;
+            }
+        }
+    }
+}
+
+// Функция для загрузки баланса из localStorage
+function loadUserBalance() {
+    if (user && user.id) {
+        const savedBalance = localStorage.getItem(`user_balance_${user.id}`);
+        userBalance = savedBalance ? parseInt(savedBalance) : 0;
+        updateBalanceDisplay();
+        console.log('💰 Loaded balance:', userBalance, '₽');
+    }
+}
+
+// Функция для сохранения баланса в localStorage
+function saveUserBalance() {
+    if (user && user.id) {
+        localStorage.setItem(`user_balance_${user.id}`, userBalance.toString());
+        console.log('💾 Balance saved:', userBalance, '₽');
+    }
+}
+
+// Функция для обновления отображения баланса во всех местах
+function updateBalanceDisplay() {
+    // Обновляем в карточке пользователя (главная страница)
+    const balanceAmountElements = document.querySelectorAll('.balance-amount');
+    balanceAmountElements.forEach(el => {
+        el.textContent = `${userBalance} ₽`;
+    });
+    
+    // Обновляем в статистике профиля
+    const statCards = document.querySelectorAll('.stat-card');
+    if (statCards.length >= 3) {
+        const balanceStatValue = statCards[2].querySelector('.stat-value');
+        if (balanceStatValue) {
+            balanceStatValue.textContent = `${userBalance} ₽`;
+        }
+    }
+}
+
+// Функция для загрузки фото профиля пользователя
+async function loadUserPhoto(userId) {
+    try {
+        const response = await fetch('/api/get-user-photo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.photoUrl) {
+            console.log('✅ User photo loaded:', data.photoUrl);
+            return data.photoUrl;
+        }
+        
+        return null;
+    } catch (error) {
+        console.error('Error loading user photo:', error);
+        return null;
     }
 }
 
@@ -320,14 +398,12 @@ async function createStarsInvoice(amount) {
     }
 }
 
-// Функция для обновления баланса пользователя
+// Функция для обновления баланса пользователя после пополнения
 function updateUserBalance(amount) {
-    const balanceElement = document.querySelector('.balance-amount');
-    if (balanceElement) {
-        const currentBalance = parseInt(balanceElement.textContent) || 0;
-        const newBalance = currentBalance + amount;
-        balanceElement.textContent = `${newBalance} ₽`;
-    }
+    userBalance += amount;
+    saveUserBalance();
+    updateBalanceDisplay();
+    console.log('✅ Balance updated:', userBalance, '₽');
 }
 
 // Инициализация при загрузке
