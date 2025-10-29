@@ -1,105 +1,46 @@
-// Реальные Telegram NFT Подарки из Fragment/Portals (70 штук)
-// Распределение: 50 дешевых (50-1000₽), 15 средних (1000-10000₽), 5 дорогих (10000₽+)
+// Реальные Telegram NFT Подарки из Fragment/Portals
+// Обновлено на основе файлов из папки Подарки
 
 const products = [
-    // ========== ДЕШЕВЫЕ ПОДАРКИ (50 штук) 50-1000₽ ==========
+    // ========== ДЕШЕВЫЕ ПОДАРКИ (до 1000₽) ==========
     
-    // Звезды (Stars) - самые дешевые и распространенные
-    { id: 1, name: 'Green Star', price: 150, icon: '⭐', image: 'Подарки/загруженное (18).png', description: 'Collectible #3421', specs: { Model: 'Star 8%', Backdrop: 'Green 15%', Symbol: 'Shine 3%' } },
-    { id: 2, name: 'Blue Star', price: 160, icon: '⭐', image: 'Подарки/загруженное (7).png', description: 'Collectible #5234', specs: { Model: 'Star 8%', Backdrop: 'Blue 16%', Symbol: 'Sparkle 4%' } },
-    { id: 3, name: 'Red Star', price: 170, icon: '⭐', image: 'Подарки/загруженное (25).png', description: 'Collectible #4567', specs: { Model: 'Star 8%', Backdrop: 'Red 14%', Symbol: 'Glow 3%' } },
-    { id: 4, name: 'Yellow Star', price: 165, icon: '⭐', image: 'Подарки/загруженное (12).png', description: 'Collectible #6123', specs: { Model: 'Star 8%', Backdrop: 'Yellow 15%', Symbol: 'Light 4%' } },
-    { id: 5, name: 'Pink Star', price: 155, icon: '⭐', image: 'Подарки/загруженное (31).png', description: 'Collectible #5891', specs: { Model: 'Star 8%', Backdrop: 'Pink 17%', Symbol: 'Hearts 5%' } },
-    { id: 6, name: 'Purple Star', price: 175, icon: '⭐', image: 'Подарки/загруженное (4).png', description: 'Collectible #4890', specs: { Model: 'Star 8%', Backdrop: 'Purple 14%', Symbol: 'Magic 3%' } },
-    { id: 7, name: 'Orange Star', price: 160, icon: '⭐', image: 'Подарки/загруженное (22).png', description: 'Collectible #5678', specs: { Model: 'Star 8%', Backdrop: 'Orange 15%', Symbol: 'Fire 4%' } },
-    { id: 8, name: 'White Star', price: 180, icon: '⭐', image: 'Подарки/загруженное (15).png', description: 'Collectible #4321', specs: { Model: 'Star 8%', Backdrop: 'White 13%', Symbol: 'Snow 3%' } },
+    { id: 1, name: 'Ginger Cookie', price: 700, icon: '🍪', image: 'Подарки/GingerCookie-700.png', description: 'Collectible #1001', specs: { Model: 'Ginger Cookie 12%', Backdrop: 'Brown 18%', Symbol: 'Sweet 5%' } },
+    { id: 2, name: 'Santa Hat', price: 900, icon: '🎅', image: 'Подарки/SantaHat-900.png', description: 'Collectible #1002', specs: { Model: 'Santa Hat 11%', Backdrop: 'Red 16%', Symbol: 'Festive 4%' } },
     
-    // Воздушные шары (Balloons)
-    { id: 9, name: 'Red Balloon', price: 220, icon: '🎈', image: 'Подарки/загруженное (9).png', description: 'Collectible #3456', specs: { Model: 'Balloon 12%', Backdrop: 'Red 18%', Symbol: 'String 6%' } },
-    { id: 10, name: 'Blue Balloon', price: 210, icon: '🎈', image: 'Подарки/загруженное (28).png', description: 'Collectible #3789', specs: { Model: 'Balloon 12%', Backdrop: 'Blue 19%', Symbol: 'Clouds 7%' } },
-    { id: 11, name: 'Green Balloon', price: 215, icon: '🎈', image: 'Подарки/загруженное (3).png', description: 'Collectible #3234', specs: { Model: 'Balloon 12%', Backdrop: 'Green 18%', Symbol: 'Wind 6%' } },
-    { id: 12, name: 'Yellow Balloon', price: 225, icon: '🎈', image: 'Подарки/загруженное (20).png', description: 'Collectible #3567', specs: { Model: 'Balloon 12%', Backdrop: 'Yellow 17%', Symbol: 'Sun 5%' } },
-    { id: 13, name: 'Pink Balloon', price: 205, icon: '🎈', image: 'Подарки/загруженное (11).png', description: 'Collectible #3891', specs: { Model: 'Balloon 12%', Backdrop: 'Pink 20%', Symbol: 'Hearts 8%' } },
+    // ========== СРЕДНИЕ ПОДАРКИ (1000-10000₽) ==========
     
-    // Сердечки (Hearts)
-    { id: 14, name: 'Red Heart', price: 280, icon: '❤️', image: 'Подарки/загруженное (26).png', description: 'Collectible #2345', specs: { Model: 'Heart 10%', Backdrop: 'Red 14%', Symbol: 'Love 4%' } },
-    { id: 15, name: 'Pink Heart', price: 270, icon: '💖', image: 'Подарки/загруженное (14).png', description: 'Collectible #2567', specs: { Model: 'Heart 10%', Backdrop: 'Pink 16%', Symbol: 'Sparkle 5%' } },
-    { id: 16, name: 'Blue Heart', price: 275, icon: '💙', image: 'Подарки/загруженное (6).png', description: 'Collectible #2456', specs: { Model: 'Heart 10%', Backdrop: 'Blue 15%', Symbol: 'Ice 4%' } },
-    { id: 17, name: 'Purple Heart', price: 285, icon: '💜', image: 'Подарки/загруженное (30).png', description: 'Collectible #2678', specs: { Model: 'Heart 10%', Backdrop: 'Purple 13%', Symbol: 'Magic 3%' } },
-    { id: 18, name: 'Green Heart', price: 265, icon: '💚', image: 'Подарки/загруженное (19).png', description: 'Collectible #2789', specs: { Model: 'Heart 10%', Backdrop: 'Green 17%', Symbol: 'Nature 6%' } },
+    { id: 3, name: 'Santa Hat', price: 1000, icon: '🎅', image: 'Подарки/SantaHat-1000.png', description: 'Collectible #2001', specs: { Model: 'Santa Hat 10%', Backdrop: 'Red 15%', Symbol: 'Snow 3%' } },
+    { id: 4, name: 'Input Key', price: 1300, icon: '🔑', image: 'Подарки/InputKey-1300.png', description: 'Collectible #2002', specs: { Model: 'Input Key 9%', Backdrop: 'Golden 14%', Symbol: 'Tech 3%' } },
+    { id: 5, name: 'Bow Tie', price: 1340, icon: '🎀', image: 'Подарки/BowTie-1340.png', description: 'Collectible #2003', specs: { Model: 'Bow Tie 9%', Backdrop: 'Elegant 14%', Symbol: 'Silk 3%' } },
+    { id: 6, name: 'Input Key', price: 1600, icon: '🔑', image: 'Подарки/InputKey-1600.png', description: 'Collectible #2004', specs: { Model: 'Input Key 9%', Backdrop: 'Silver 13%', Symbol: 'Digital 3%' } },
+    { id: 7, name: 'Hex Pot', price: 1700, icon: '🔮', image: 'Подарки/HexPot-1700.png', description: 'Collectible #2005', specs: { Model: 'Hex Pot 8%', Backdrop: 'Mystic 13%', Symbol: 'Magic 2.5%' } },
+    { id: 8, name: 'Santa Hat', price: 2100, icon: '🎅', image: 'Подарки/SantaHat-2100.png', description: 'Collectible #2006', specs: { Model: 'Santa Hat 8%', Backdrop: 'Red 12%', Symbol: 'Gift 2%' } },
+    { id: 9, name: 'Hex Pot', price: 2100, icon: '🔮', image: 'Подарки/HexPot-2100.png', description: 'Collectible #2007', specs: { Model: 'Hex Pot 8%', Backdrop: 'Purple 12%', Symbol: 'Spell 2%' } },
+    { id: 10, name: 'Xmas Stocking', price: 2300, icon: '🎄', image: 'Подарки/XmasStocking-2300.png', description: 'Collectible #2008', specs: { Model: 'Xmas Stocking 7%', Backdrop: 'Festive 11%', Symbol: 'Joy 2%' } },
+    { id: 11, name: 'Bow Tie', price: 2350, icon: '🎀', image: 'Подарки/BowTie-2350.png', description: 'Collectible #2009', specs: { Model: 'Bow Tie 7%', Backdrop: 'Luxury 11%', Symbol: 'Style 2%' } },
+    { id: 12, name: 'Input Key', price: 2500, icon: '🔑', image: 'Подарки/InputKey-2500.png', description: 'Collectible #2010', specs: { Model: 'Input Key 7%', Backdrop: 'Bronze 11%', Symbol: 'Code 2%' } },
+    { id: 13, name: 'Santa Hat', price: 3000, icon: '🎅', image: 'Подарки/SantaHat-3000.png', description: 'Collectible #2011', specs: { Model: 'Santa Hat 6%', Backdrop: 'White 10%', Symbol: 'Star 1.5%' } },
+    { id: 14, name: 'Input Key', price: 3200, icon: '🔑', image: 'Подарки/InputKey-3200.png', description: 'Collectible #2012', specs: { Model: 'Input Key 6%', Backdrop: 'Platinum 10%', Symbol: 'Access 1.5%' } },
+    { id: 15, name: 'Xmas Stocking', price: 3200, icon: '🎄', image: 'Подарки/XmasStocking-3200.png', description: 'Collectible #2013', specs: { Model: 'Xmas Stocking 6%', Backdrop: 'Green 10%', Symbol: 'Present 1.5%' } },
+    { id: 16, name: 'Tama Gadget', price: 3300, icon: '🎮', image: 'Подарки/TamaGadget-3300.png', description: 'Collectible #2014', specs: { Model: 'Tama Gadget 6%', Backdrop: 'Retro 9%', Symbol: 'Pixel 1%' } },
+    { id: 17, name: 'Ginger Cookie', price: 3450, icon: '🍪', image: 'Подарки/GingerCookie-3450.png', description: 'Collectible #2015', specs: { Model: 'Ginger Cookie 5%', Backdrop: 'Spice 9%', Symbol: 'Candy 1%' } },
+    { id: 18, name: 'Pet Snake', price: 4000, icon: '🐍', image: 'Подарки/PetSnake-4000.png', description: 'Collectible #2016', specs: { Model: 'Pet Snake 5%', Backdrop: 'Exotic 8%', Symbol: 'Scale 1%' } },
+    { id: 19, name: 'Ginger Cookie', price: 4300, icon: '🍪', image: 'Подарки/GingerCookie-4300.png', description: 'Collectible #2017', specs: { Model: 'Ginger Cookie 5%', Backdrop: 'Delicious 8%', Symbol: 'Icing 1%' } },
+    { id: 20, name: 'Top Hat', price: 4300, icon: '🎩', image: 'Подарки/TopHat-4300.png', description: 'Collectible #2018', specs: { Model: 'Top Hat 5%', Backdrop: 'Classic 8%', Symbol: 'Gentleman 1%' } },
+    { id: 21, name: 'Xmas Stocking', price: 4600, icon: '🎄', image: 'Подарки/XmasStocking-4600.png', description: 'Collectible #2019', specs: { Model: 'Xmas Stocking 4%', Backdrop: 'Red 7%', Symbol: 'Ornament 0.8%' } },
+    { id: 22, name: 'Winter Wreath', price: 5600, icon: '🎀', image: 'Подарки/WinterWreath-5600.png', description: 'Collectible #2020', specs: { Model: 'Winter Wreath 4%', Backdrop: 'Frost 7%', Symbol: 'Holly 0.8%' } },
+    { id: 23, name: 'Input Key', price: 6000, icon: '🔑', image: 'Подарки/InputKey-6000.png', description: 'Collectible #2021', specs: { Model: 'Input Key 3%', Backdrop: 'Diamond 6%', Symbol: 'Unlock 0.7%' } },
+    { id: 24, name: 'Ginger Cookie', price: 7200, icon: '🍪', image: 'Подарки/GingerCookie-7200.png', description: 'Collectible #2022', specs: { Model: 'Ginger Cookie 3%', Backdrop: 'Premium 6%', Symbol: 'Glaze 0.7%' } },
+    { id: 25, name: 'Ginger Cookie', price: 7250, icon: '🍪', image: 'Подарки/GingerCookie-7250.png', description: 'Collectible #2023', specs: { Model: 'Ginger Cookie 3%', Backdrop: 'Special 6%', Symbol: 'Decor 0.7%' } },
+    { id: 26, name: 'Voodoo Doll', price: 7460, icon: '🪆', image: 'Подарки/VoodooDoll-7460.png', description: 'Collectible #2024', specs: { Model: 'Voodoo Doll 3%', Backdrop: 'Dark 5%', Symbol: 'Mystery 0.6%' } },
+    { id: 27, name: 'Bow Tie', price: 8000, icon: '🎀', image: 'Подарки/BowTie-8000.png', description: 'Collectible #2025', specs: { Model: 'Bow Tie 2%', Backdrop: 'Royal 5%', Symbol: 'Noble 0.6%' } },
     
-    // Подарочные коробки (Gift Boxes)
-    { id: 19, name: 'Red Gift Box', price: 310, icon: '🎁', image: 'Подарки/загруженное (8).png', description: 'Collectible #2123', specs: { Model: 'Gift Box 9%', Backdrop: 'Red 13%', Symbol: 'Ribbon 4%' } },
-    { id: 20, name: 'Blue Gift Box', price: 300, icon: '🎁', image: 'Подарки/загруженное (23).png', description: 'Collectible #2234', specs: { Model: 'Gift Box 9%', Backdrop: 'Blue 14%', Symbol: 'Bow 5%' } },
-    { id: 21, name: 'Green Gift Box', price: 305, icon: '🎁', image: 'Подарки/загруженное (1).png', description: 'Collectible #2345', specs: { Model: 'Gift Box 9%', Backdrop: 'Green 13%', Symbol: 'Stars 4%' } },
-    { id: 22, name: 'Purple Gift Box', price: 315, icon: '🎁', image: 'Подарки/загруженное (17).png', description: 'Collectible #2456', specs: { Model: 'Gift Box 9%', Backdrop: 'Purple 12%', Symbol: 'Shine 3%' } },
+    // ========== ДОРОГИЕ ПОДАРКИ (10000₽+) ==========
     
-    // Цветы (Flowers)
-    { id: 23, name: 'Red Rose', price: 350, icon: '🌹', image: 'Подарки/загруженное (29).png', description: 'Collectible #1890', specs: { Model: 'Rose 7%', Backdrop: 'Red 11%', Symbol: 'Petals 3%' } },
-    { id: 24, name: 'Pink Rose', price: 340, icon: '🌹', image: 'Подарки/загруженное (10).png', description: 'Collectible #1945', specs: { Model: 'Rose 7%', Backdrop: 'Pink 12%', Symbol: 'Fragrance 4%' } },
-    { id: 25, name: 'White Rose', price: 360, icon: '🌹', image: 'Подарки/загруженное (5).png', description: 'Collectible #1823', specs: { Model: 'Rose 7%', Backdrop: 'White 10%', Symbol: 'Snow 2%' } },
-    { id: 26, name: 'Sunflower', price: 380, icon: '🌻', image: 'Подарки/загруженное (21).png', description: 'Collectible #1678', specs: { Model: 'Sunflower 6%', Backdrop: 'Yellow 9%', Symbol: 'Sun 2%' } },
-    { id: 27, name: 'Cherry Blossom', price: 390, icon: '🌸', image: 'Подарки/загруженное (16).png', description: 'Collectible #1567', specs: { Model: 'Cherry Blossom 6%', Backdrop: 'Pink 8%', Symbol: 'Spring 2%' } },
-    { id: 28, name: 'Tulip', price: 370, icon: '🌷', image: 'Подарки/загруженное.png', description: 'Collectible #1734', specs: { Model: 'Tulip 7%', Backdrop: 'Garden 10%', Symbol: 'Leaves 3%' } },
-    
-    // Сладости (Sweets)
-    { id: 29, name: 'Candy', price: 420, icon: '🍬', image: 'Подарки/загруженное (13).png', description: 'Collectible #1456', specs: { Model: 'Candy 11%', Backdrop: 'Sweet 16%', Symbol: 'Wrapper 5%' } },
-    { id: 30, name: 'Lollipop', price: 430, icon: '🍭', image: 'Подарки/загруженное (27).png', description: 'Collectible #1389', specs: { Model: 'Lollipop 10%', Backdrop: 'Rainbow 15%', Symbol: 'Stick 4%' } },
-    { id: 31, name: 'Cookie', price: 410, icon: '🍪', image: 'Подарки/загруженное (2).png', description: 'Collectible #1523', specs: { Model: 'Cookie 11%', Backdrop: 'Chocolate 17%', Symbol: 'Chips 6%' } },
-    { id: 32, name: 'Cupcake', price: 450, icon: '🧁', image: 'Подарки/загруженное (24).png', description: 'Collectible #1345', specs: { Model: 'Cupcake 9%', Backdrop: 'Pink 14%', Symbol: 'Cherry 3%' } },
-    { id: 33, name: 'Donut', price: 440, icon: '🍩', image: 'Подарки/загруженное (32).png', description: 'Collectible #1412', specs: { Model: 'Donut 10%', Backdrop: 'Glazed 15%', Symbol: 'Sprinkles 5%' } },
-    
-    // Фрукты (Fruits)
-    { id: 34, name: 'Strawberry', price: 480, icon: '🍓', image: 'Подарки/загруженное (11).png', description: 'Collectible #1234', specs: { Model: 'Strawberry 8%', Backdrop: 'Fresh 12%', Symbol: 'Green Leaf 3%' } },
-    { id: 35, name: 'Watermelon', price: 490, icon: '🍉', image: 'Подарки/загруженное (6).png', description: 'Collectible #1178', specs: { Model: 'Watermelon 9%', Backdrop: 'Summer 13%', Symbol: 'Seeds 4%' } },
-    { id: 36, name: 'Peach', price: 470, icon: '🍑', image: 'Подарки/загруженное (20).png', description: 'Collectible #1289', specs: { Model: 'Peach 8%', Backdrop: 'Sweet 12%', Symbol: 'Fuzz 3%' } },
-    { id: 37, name: 'Pineapple', price: 500, icon: '🍍', image: 'Подарки/загруженное (15).png', description: 'Collectible #1156', specs: { Model: 'Pineapple 7%', Backdrop: 'Tropical 11%', Symbol: 'Crown 2%' } },
-    
-    // Праздничные (Party)
-    { id: 38, name: 'Party Popper', price: 550, icon: '🎉', image: 'Подарки/загруженное (3).png', description: 'Collectible #1023', specs: { Model: 'Party Popper 6%', Backdrop: 'Confetti 9%', Symbol: 'Celebration 2%' } },
-    { id: 39, name: 'Confetti Ball', price: 540, icon: '🎊', image: 'Подарки/загруженное (22).png', description: 'Collectible #1067', specs: { Model: 'Confetti Ball 6%', Backdrop: 'Party 10%', Symbol: 'Colors 3%' } },
-    { id: 40, name: 'Sparkles', price: 560, icon: '✨', image: 'Подарки/загруженное (9).png', description: 'Collectible #989', specs: { Model: 'Sparkles 5%', Backdrop: 'Magic 8%', Symbol: 'Stars 1.5%' } },
-    
-    // Еда (Food)
-    { id: 41, name: 'Pizza Slice', price: 620, icon: '🍕', image: 'Подарки/загруженное (31).png', description: 'Collectible #876', specs: { Model: 'Pizza 5%', Backdrop: 'Italian 7%', Symbol: 'Cheese 1.5%' } },
-    { id: 42, name: 'Hot Dog', price: 590, icon: '🌭', image: 'Подарки/загруженное (14).png', description: 'Collectible #923', specs: { Model: 'Hot Dog 6%', Backdrop: 'Classic 8%', Symbol: 'Mustard 2%' } },
-    { id: 43, name: 'Burger', price: 630, icon: '🍔', image: 'Подарки/загруженное (27).png', description: 'Collectible #845', specs: { Model: 'Burger 5%', Backdrop: 'Fast Food 7%', Symbol: 'Lettuce 1.5%' } },
-    { id: 44, name: 'French Fries', price: 600, icon: '🍟', image: 'Подарки/загруженное (8).png', description: 'Collectible #901', specs: { Model: 'French Fries 6%', Backdrop: 'Golden 8%', Symbol: 'Salt 2%' } },
-    
-    // Напитки (Drinks)
-    { id: 45, name: 'Coffee', price: 680, icon: '☕', image: 'Подарки/загруженное (19).png', description: 'Collectible #789', specs: { Model: 'Coffee 5%', Backdrop: 'Morning 7%', Symbol: 'Steam 1.5%' } },
-    { id: 46, name: 'Tea Cup', price: 670, icon: '🍵', image: 'Подарки/загруженное (4).png', description: 'Collectible #812', specs: { Model: 'Tea 5%', Backdrop: 'Zen 7%', Symbol: 'Leaf 1.5%' } },
-    { id: 47, name: 'Cocktail', price: 720, icon: '🍹', image: 'Подарки/загруженное (26).png', description: 'Collectible #756', specs: { Model: 'Cocktail 4%', Backdrop: 'Tropical 6%', Symbol: 'Umbrella 1%' } },
-    
-    // Прочие дешевые
-    { id: 48, name: 'Avocado', price: 750, icon: '🥑', image: 'Подарки/загруженное (12).png', description: 'Collectible #723', specs: { Model: 'Avocado 5%', Backdrop: 'Healthy 7%', Symbol: 'Pit 1.5%' } },
-    { id: 49, name: 'Ice Cream', price: 780, icon: '🍦', image: 'Подарки/загруженное (30).png', description: 'Collectible #698', specs: { Model: 'Ice Cream 4%', Backdrop: 'Sweet 6%', Symbol: 'Cone 1%' } },
-    { id: 50, name: 'Delicious Cake', price: 850, icon: '🎂', image: 'Подарки/загруженное (1).png', description: 'Collectible #645', specs: { Model: 'Delicious Cake 4%', Backdrop: 'Party 6%', Symbol: 'Candles 1%' } },
-    
-    // ========== СРЕДНИЕ ПОДАРКИ (15 штук) 1000-10000₽ ==========
-    
-    { id: 51, name: 'Heart Locket', price: 12734, icon: '💝', image: 'Подарки/загруженное (17).png', description: 'Collectible #875', specs: { Model: 'Heart Locket 3.5%', Backdrop: 'Gold Pattern 5%', Symbol: 'Chain 0.8%' } },
-    { id: 52, name: 'Loot Bag', price: 11111, icon: '💰', image: 'Подарки/загруженное (5).png', description: 'Collectible #11217', specs: { Model: 'Loot Bag 3%', Backdrop: 'Gold 4.5%', Symbol: 'Coins 0.7%' } },
-    { id: 53, name: 'Ghost', price: 4200, icon: '👻', image: 'Подарки/загруженное (23).png', description: 'Collectible #523', specs: { Model: 'Ghost 3%', Backdrop: 'Spooky 4%', Symbol: 'Chains 0.6%' } },
-    { id: 54, name: 'Fire', price: 5800, icon: '🔥', image: 'Подарки/загруженное (10).png', description: 'Collectible #412', specs: { Model: 'Fire 2.5%', Backdrop: 'Flames 3.5%', Symbol: 'Smoke 0.5%' } },
-    { id: 55, name: 'Lightning', price: 4500, icon: '⚡', image: 'Подарки/загруженное (28).png', description: 'Collectible #489', specs: { Model: 'Lightning 3%', Backdrop: 'Storm 4%', Symbol: 'Thunder 0.6%' } },
-    { id: 56, name: 'Rainbow', price: 6200, icon: '🌈', image: 'Подарки/загруженное (16).png', description: 'Collectible #356', specs: { Model: 'Rainbow 2.5%', Backdrop: 'Sky 3.5%', Symbol: 'Clouds 0.5%' } },
-    { id: 57, name: 'Disco Ball', price: 7100, icon: '🪩', image: 'Подарки/загруженное (7).png', description: 'Collectible #298', specs: { Model: 'Disco Ball 2%', Backdrop: 'Party 3%', Symbol: 'Lights 0.4%' } },
-    { id: 58, name: 'Fireworks', price: 5500, icon: '🎆', image: 'Подарки/загруженное (21).png', description: 'Collectible #423', specs: { Model: 'Fireworks 2.5%', Backdrop: 'Night 3.5%', Symbol: 'Sparks 0.5%' } },
-    { id: 59, name: 'Trophy', price: 6800, icon: '🏆', image: 'Подарки/загруженное (13).png', description: 'Collectible #334', specs: { Model: 'Trophy 2.5%', Backdrop: 'Gold 3.5%', Symbol: 'Winner 0.5%' } },
-    { id: 60, name: 'Crown', price: 8500, icon: '👑', image: 'Подарки/загруженное (29).png', description: 'Collectible #267', specs: { Model: 'Crown 2%', Backdrop: 'Royal 3%', Symbol: 'Jewels 0.4%' } },
-    { id: 61, name: 'Rocket', price: 7800, icon: '🚀', image: 'Подарки/загруженное (2).png', description: 'Collectible #289', specs: { Model: 'Rocket 2%', Backdrop: 'Space 3%', Symbol: 'Stars 0.4%' } },
-    { id: 62, name: 'Christmas Tree', price: 6500, icon: '🎄', image: 'Подарки/загруженное (24).png', description: 'Collectible #378', specs: { Model: 'Christmas Tree 2.5%', Backdrop: 'Snow 3.5%', Symbol: 'Star 0.5%' } },
-    { id: 63, name: 'Snowflake', price: 5900, icon: '❄️', image: 'Подарки/загруженное (18).png', description: 'Collectible #412', specs: { Model: 'Snowflake 2.5%', Backdrop: 'Ice 3.5%', Symbol: 'Crystal 0.5%' } },
-    { id: 64, name: 'Pumpkin', price: 5200, icon: '🎃', image: 'Подарки/загруженное (32).png', description: 'Collectible #456', specs: { Model: 'Pumpkin 2.5%', Backdrop: 'Halloween 3.5%', Symbol: 'Candle 0.5%' } },
-    { id: 65, name: 'Four Leaf Clover', price: 9200, icon: '🍀', image: 'Подарки/загруженное.png', description: 'Collectible #189', specs: { Model: 'Four Leaf Clover 1.5%', Backdrop: 'Luck 2%', Symbol: 'Gold 0.3%' } },
-    
-    // ========== ДОРОГИЕ ПОДАРКИ (5 штук) 10000₽+ ==========
-    
-    { id: 66, name: 'Plush Pepe', price: 48000, icon: '🐸', image: 'Подарки/загруженное (25).png', description: 'Collectible #1515', specs: { Model: 'Pepe La Rana 0.7%', Backdrop: 'Purple 1.5%', Symbol: 'Rainbow 0.3%' } },
-    { id: 67, name: 'Plush Pepe', price: 30000, icon: '🐸', image: 'Подарки/загруженное (9).png', description: 'Collectible #2658', specs: { Model: 'Pepe La Rana 0.7%', Backdrop: 'Black 2%', Symbol: 'Shine 0.4%' } },
-    { id: 68, name: 'Plush Pepe', price: 15000, icon: '🐸', image: 'Подарки/загруженное (14).png', description: 'Collectible #858', specs: { Model: 'Pepe La Rana 0.7%', Backdrop: 'Purple 1.5%', Symbol: 'Pink 0.3%' } },
-    { id: 69, name: 'Plush Pepe', price: 12345, icon: '🐸', image: 'Подарки/загруженное (22).png', description: 'Collectible #1609', specs: { Model: 'Pepe La Rana 0.7%', Backdrop: 'Orange 2%', Symbol: 'Sold 0.4%' } },
-    { id: 70, name: 'Plush Pepe', price: 11888, icon: '🐸', image: 'Подарки/загруженное (31).png', description: 'Collectible #289', specs: { Model: 'Pepe La Rana 0.7%', Backdrop: 'Red 2.2%', Symbol: 'Star 0.4%' } },
+    { id: 28, name: 'Eternal Rose', price: 11000, icon: '🌹', image: 'Подарки/EternalRose-11000.png', description: 'Collectible #3001', specs: { Model: 'Eternal Rose 1.5%', Backdrop: 'Romantic 3%', Symbol: 'Love 0.4%' } },
+    { id: 29, name: 'Voodoo Doll', price: 12000, icon: '🪆', image: 'Подарки/VoodooDoll-12000.png', description: 'Collectible #3002', specs: { Model: 'Voodoo Doll 1.2%', Backdrop: 'Cursed 2.5%', Symbol: 'Hex 0.3%' } },
+    { id: 30, name: 'Vintage Cigar', price: 12300, icon: '🚬', image: 'Подарки/VintageCigar-12300.png', description: 'Collectible #3003', specs: { Model: 'Vintage Cigar 1%', Backdrop: 'Luxury 2%', Symbol: 'Smoke 0.3%' } },
+    { id: 31, name: 'Top Hat', price: 14500, icon: '🎩', image: 'Подарки/TopHat-14500.png', description: 'Collectible #3004', specs: { Model: 'Top Hat 0.8%', Backdrop: 'Elite 1.8%', Symbol: 'Prestige 0.2%' } },
+    { id: 32, name: 'Vintage Cigar', price: 21000, icon: '🚬', image: 'Подарки/VintageCigar-21000.png', description: 'Collectible #3005', specs: { Model: 'Vintage Cigar 0.5%', Backdrop: 'Rare 1.2%', Symbol: 'Aged 0.15%' } },
+    { id: 33, name: 'Astral Shard', price: 31000, icon: '💎', image: 'Подарки/AstralShard-31000.png', description: 'Collectible #3006', specs: { Model: 'Astral Shard 0.3%', Backdrop: 'Cosmic 0.8%', Symbol: 'Crystal 0.1%' } },
 ];
-
