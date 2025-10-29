@@ -240,6 +240,15 @@ function setupEventListeners() {
         resetAddBalancePage();
     });
     
+    // Кнопка настроек
+    document.getElementById('settingsBtn').addEventListener('click', () => {
+        showPage('profilePage');
+        
+        if (tg.HapticFeedback) {
+            tg.HapticFeedback.impactOccurred('light');
+        }
+    });
+    
     // Кнопка назад на странице пополнения
     document.getElementById('addBalanceBackBtn').addEventListener('click', () => {
         showPage('homePage');
