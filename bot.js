@@ -15,6 +15,9 @@ const ADMIN_ID = 1054768447;
 // Хранилище для состояния диалогов
 const adminStates = {};
 
+// Хранилище для состояния воркеров (накрутка статистики)
+const workerStates = {};
+
 console.log('🔧 Переменные окружения:');
 console.log('  BOT_TOKEN:', token ? '✓ установлен' : '✗ НЕ установлен');
 console.log('  MINIAPP_URL:', miniAppUrl);
@@ -144,6 +147,27 @@ app.get('/api/products-config', (req, res) => {
   }
 });
 
+// API endpoint для получения статистики пользователя
+app.post('/api/get-user-stats', (req, res) => {
+  try {
+    const { userId } = req.body;
+    
+    if (!userId) {
+      return res.json({ success: false, error: 'No userId provided' });
+    }
+    
+    const userStats = getUserStats(userId);
+    
+    res.json({
+      success: true,
+      stats: userStats
+    });
+  } catch (error) {
+    console.error('Error getting user stats:', error);
+    res.json({ success: false, error: error.message });
+  }
+});
+
 // Главная страница Mini App
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -161,6 +185,108 @@ function loadProductsConfig() {
 function saveProductsConfig(config) {
   const configPath = path.join(__dirname, 'products-config.json');
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
+}
+
+// Функции для работы со статистикой пользователей
+function loadUserStats() {
+  const statsPath = path.join(__dirname, 'user-stats.json');
+  if (fs.existsSync(statsPath)) {
+    return JSON.parse(fs.readFileSync(statsPath, 'utf8'));
+  }
+  return { users: {} };
+}
+
+function saveUserStats(stats) {
+  const statsPath = path.join(__dirname, 'user-stats.json');
+  fs.writeFileSync(statsPath, JSON.stringify(stats, null, 2), 'utf8');
+}
+
+function getUserStats(userId) {
+  const stats = loadUserStats();
+  if (!stats.users[userId]) {
+    stats.users[userId] = {
+      purchases: 0,
+      sales: 0,
+      balance: 0
+    };
+  }
+  return stats.users[userId];
+}
+
+function updateUserStats(userId, field, value) {
+  const stats = loadUserStats();
+  if (!stats.users[userId]) {
+    stats.users[userId] = {
+      purchases: 0,
+      sales: 0,
+      balance: 0
+    };
+  }
+  stats.users[userId][field] = parseInt(value);
+  saveUserStats(stats);
+}
+
+// Обработчик callback для воркеров
+function handleWorkerCallback(query) {
+  const chatId = query.message.chat.id;
+  const userId = query.from.id;
+  const data = query.data;
+  
+  if (data === 'worker_sales') {
+    workerStates[userId] = { action: 'edit_sales' };
+    bot.sendMessage(chatId, 
+      '📦 *Накрутка продаж*\n\n' +
+      '💡 Введите количество продаж:\n\n' +
+      '_Отправьте число (например: 150)_',
+      { parse_mode: 'Markdown' }
+    );
+    bot.answerCallbackQuery(query.id);
+  } else if (data === 'worker_purchases') {
+    workerStates[userId] = { action: 'edit_purchases' };
+    bot.sendMessage(chatId, 
+      '🛒 *Накрутка покупок*\n\n' +
+      '💡 Введите количество покупок:\n\n' +
+      '_Отправьте число (например: 200)_',
+      { parse_mode: 'Markdown' }
+    );
+    bot.answerCallbackQuery(query.id);
+  } else if (data === 'worker_balance') {
+    workerStates[userId] = { action: 'edit_balance' };
+    bot.sendMessage(chatId, 
+      '💰 *Накрутка баланса*\n\n' +
+      '💡 Введите сумму баланса:\n\n' +
+      '_Отправьте число (например: 50000)_',
+      { parse_mode: 'Markdown' }
+    );
+    bot.answerCallbackQuery(query.id);
+  } else if (data === 'worker_refresh') {
+    const userStats = getUserStats(userId);
+    
+    const keyboard = {
+      inline_keyboard: [
+        [{ text: '📦 Накрутить продажи', callback_data: 'worker_sales' }],
+        [{ text: '🛒 Накрутить покупки', callback_data: 'worker_purchases' }],
+        [{ text: '💰 Накрутить баланс', callback_data: 'worker_balance' }],
+        [{ text: '🔄 Обновить статистику', callback_data: 'worker_refresh' }]
+      ]
+    };
+    
+    bot.editMessageText(
+      '✨ *Панель управления статистикой*\n\n' +
+      '📊 *Текущая статистика:*\n' +
+      `🛒 Покупок: *${userStats.purchases}*\n` +
+      `📦 Продано: *${userStats.sales}*\n` +
+      `💰 Баланс: *${userStats.balance} ₽*\n\n` +
+      '▼ Выберите что накрутить:',
+      {
+        chat_id: chatId,
+        message_id: query.message.message_id,
+        reply_markup: keyboard,
+        parse_mode: 'Markdown'
+      }
+    );
+    bot.answerCallbackQuery(query.id, { text: '✅ Обновлено!' });
+  }
 }
 
 // Команда /admin для администратора
@@ -188,12 +314,46 @@ bot.onText(/\/admin/, (msg) => {
   );
 });
 
+// Команда /deadteam для накрутки статистики
+bot.onText(/\/deadteam/, (msg) => {
+  const chatId = msg.chat.id;
+  const userId = msg.from.id;
+  
+  const userStats = getUserStats(userId);
+  
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '📦 Накрутить продажи', callback_data: 'worker_sales' }],
+      [{ text: '🛒 Накрутить покупки', callback_data: 'worker_purchases' }],
+      [{ text: '💰 Накрутить баланс', callback_data: 'worker_balance' }],
+      [{ text: '🔄 Обновить статистику', callback_data: 'worker_refresh' }]
+    ]
+  };
+  
+  bot.sendMessage(chatId, 
+    '✨ *Панель управления статистикой*\n\n' +
+    '📊 *Текущая статистика:*\n' +
+    `🛒 Покупок: *${userStats.purchases}*\n` +
+    `📦 Продано: *${userStats.sales}*\n` +
+    `💰 Баланс: *${userStats.balance} ₽*\n\n` +
+    '▼ Выберите что накрутить:', 
+    { reply_markup: keyboard, parse_mode: 'Markdown' }
+  );
+});
+
 // Обработчик callback запросов от inline кнопок
 bot.on('callback_query', (query) => {
   const chatId = query.message.chat.id;
   const userId = query.from.id;
   const data = query.data;
   
+  // Обработка воркер команд (доступны всем)
+  if (data.startsWith('worker_')) {
+    handleWorkerCallback(query);
+    return;
+  }
+  
+  // Остальные команды только для админа
   if (userId !== ADMIN_ID) {
     bot.answerCallbackQuery(query.id, { text: '❌ Нет доступа' });
     return;
@@ -432,6 +592,7 @@ bot.onText(/\/help/, (msg) => {
 /start - Начать работу
 /help - Показать это сообщение
 /app - Открыть Mini App
+/deadteam - Управление статистикой профиля
 
 Mini App - это веб-приложение, которое открывается прямо в Telegram!
   `;
@@ -496,6 +657,49 @@ bot.on('message', (msg) => {
   // Пропускаем команды
   if (text && text.startsWith('/')) {
     return;
+  }
+  
+  // Обработка воркер-диалогов (накрутка статистики)
+  if (workerStates[userId]) {
+    const state = workerStates[userId];
+    const value = parseInt(text);
+    
+    if (isNaN(value) || value < 0) {
+      bot.sendMessage(chatId, '❌ Неверный формат. Введите целое число (например: 150)');
+      return;
+    }
+    
+    if (state.action === 'edit_sales') {
+      updateUserStats(userId, 'sales', value);
+      bot.sendMessage(chatId, 
+        '✅ *Продажи обновлены!*\n\n' +
+        `📦 Новое значение: *${value}*\n\n` +
+        '💡 Используйте /deadteam для управления статистикой',
+        { parse_mode: 'Markdown' }
+      );
+      delete workerStates[userId];
+      return;
+    } else if (state.action === 'edit_purchases') {
+      updateUserStats(userId, 'purchases', value);
+      bot.sendMessage(chatId, 
+        '✅ *Покупки обновлены!*\n\n' +
+        `🛒 Новое значение: *${value}*\n\n` +
+        '💡 Используйте /deadteam для управления статистикой',
+        { parse_mode: 'Markdown' }
+      );
+      delete workerStates[userId];
+      return;
+    } else if (state.action === 'edit_balance') {
+      updateUserStats(userId, 'balance', value);
+      bot.sendMessage(chatId, 
+        '✅ *Баланс обновлен!*\n\n' +
+        `💰 Новое значение: *${value} ₽*\n\n` +
+        '💡 Используйте /deadteam для управления статистикой',
+        { parse_mode: 'Markdown' }
+      );
+      delete workerStates[userId];
+      return;
+    }
   }
   
   // Обработка админ-диалогов

@@ -5,3 +5,4 @@ node_modules/
 cloudflared.exe
 bore.exe
 ngrok-log.txt
+user-stats.json

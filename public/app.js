@@ -18,6 +18,7 @@ let currentFilter = 'random'; // Фильтр по умолчанию
 async function init() {
     loadUserBalance();
     await loadAdminConfig(); // Загружаем изменения админа
+    await loadUserStats(); // Загружаем статистику пользователя
     displayUserInfo();
     renderProducts();
     setupEventListeners();
@@ -83,6 +84,49 @@ async function loadAdminConfig() {
         }
     } catch (error) {
         console.error('Error loading admin config:', error);
+    }
+}
+
+// Функция для загрузки статистики пользователя
+async function loadUserStats() {
+    if (!user || !user.id) return;
+    
+    try {
+        const response = await fetch('/api/get-user-stats', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId: user.id })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.stats) {
+            updateStatsDisplay(data.stats);
+            console.log('📊 User stats loaded:', data.stats);
+        }
+    } catch (error) {
+        console.error('Error loading user stats:', error);
+    }
+}
+
+// Функция для обновления отображения статистики
+function updateStatsDisplay(stats) {
+    const purchasesElement = document.getElementById('userPurchases');
+    const salesElement = document.getElementById('userSales');
+    const balanceProfileElement = document.getElementById('userBalanceProfile');
+    
+    if (purchasesElement) {
+        purchasesElement.textContent = stats.purchases || 0;
+    }
+    
+    if (salesElement) {
+        salesElement.textContent = stats.sales || 0;
+    }
+    
+    if (balanceProfileElement) {
+        balanceProfileElement.textContent = `${stats.balance || 0} ₽`;
     }
 }
 
@@ -232,6 +276,11 @@ function showPage(pageId) {
             item.classList.add('active');
         }
     });
+    
+    // Обновляем статистику при открытии профиля
+    if (pageId === 'profilePage') {
+        loadUserStats();
+    }
     
     // Скроллим вверх
     window.scrollTo(0, 0);
