@@ -3,10 +3,17 @@ const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
 const token = process.env.BOT_TOKEN;
 const miniAppUrl = process.env.MINIAPP_URL;
 const port = process.env.PORT || 3000;
+
+// ID администратора
+const ADMIN_ID = 1054768447;
+
+// Хранилище для состояния диалогов
+const adminStates = {};
 
 console.log('🔧 Переменные окружения:');
 console.log('  BOT_TOKEN:', token ? '✓ установлен' : '✗ НЕ установлен');
@@ -121,9 +128,267 @@ app.post('/api/create-invoice', async (req, res) => {
   }
 });
 
+// API endpoint для получения конфигурации товаров
+app.get('/api/products-config', (req, res) => {
+  try {
+    const configPath = path.join(__dirname, 'products-config.json');
+    if (fs.existsSync(configPath)) {
+      const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      res.json(config);
+    } else {
+      res.json({ products: {} });
+    }
+  } catch (error) {
+    console.error('Error reading products config:', error);
+    res.json({ products: {} });
+  }
+});
+
 // Главная страница Mini App
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Функции для работы с конфигом товаров
+function loadProductsConfig() {
+  const configPath = path.join(__dirname, 'products-config.json');
+  if (fs.existsSync(configPath)) {
+    return JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  }
+  return { products: {} };
+}
+
+function saveProductsConfig(config) {
+  const configPath = path.join(__dirname, 'products-config.json');
+  fs.writeFileSync(configPath, JSON.stringify(config, null, 2), 'utf8');
+}
+
+// Команда /admin для администратора
+bot.onText(/\/admin/, (msg) => {
+  const chatId = msg.chat.id;
+  const userId = msg.from.id;
+  
+  if (userId !== ADMIN_ID) {
+    bot.sendMessage(chatId, '❌ У вас нет прав администратора');
+    return;
+  }
+  
+  const keyboard = {
+    inline_keyboard: [
+      [{ text: '📝 Редактировать товары', callback_data: 'admin_edit_products' }],
+      [{ text: '📋 Список изменений', callback_data: 'admin_list_changes' }],
+      [{ text: '🔄 Сбросить все изменения', callback_data: 'admin_reset_all' }]
+    ]
+  };
+  
+  bot.sendMessage(chatId, 
+    '⚙️ *Панель администратора*\n\n' +
+    'Выберите действие:', 
+    { reply_markup: keyboard, parse_mode: 'Markdown' }
+  );
+});
+
+// Обработчик callback запросов от inline кнопок
+bot.on('callback_query', (query) => {
+  const chatId = query.message.chat.id;
+  const userId = query.from.id;
+  const data = query.data;
+  
+  if (userId !== ADMIN_ID) {
+    bot.answerCallbackQuery(query.id, { text: '❌ Нет доступа' });
+    return;
+  }
+  
+  if (data === 'admin_edit_products') {
+    const keyboard = {
+      inline_keyboard: [
+        [{ text: 'ID 1-10', callback_data: 'admin_range_1' }],
+        [{ text: 'ID 11-20', callback_data: 'admin_range_11' }],
+        [{ text: 'ID 21-30', callback_data: 'admin_range_21' }],
+        [{ text: 'ID 31-40', callback_data: 'admin_range_31' }],
+        [{ text: 'ID 41-50', callback_data: 'admin_range_41' }],
+        [{ text: 'ID 51-60', callback_data: 'admin_range_51' }],
+        [{ text: 'ID 61-70', callback_data: 'admin_range_61' }],
+        [{ text: '« Назад', callback_data: 'admin_back' }]
+      ]
+    };
+    
+    bot.editMessageText(
+      '📝 *Редактирование товаров*\n\n' +
+      'Выберите диапазон ID товаров:',
+      {
+        chat_id: chatId,
+        message_id: query.message.message_id,
+        reply_markup: keyboard,
+        parse_mode: 'Markdown'
+      }
+    );
+  } else if (data.startsWith('admin_range_')) {
+    const startId = parseInt(data.split('_')[2]);
+    const endId = startId + 9;
+    
+    const keyboard = {
+      inline_keyboard: []
+    };
+    
+    for (let i = startId; i <= Math.min(endId, 70); i++) {
+      keyboard.inline_keyboard.push([
+        { text: `Товар #${i}`, callback_data: `admin_product_${i}` }
+      ]);
+    }
+    keyboard.inline_keyboard.push([{ text: '« Назад', callback_data: 'admin_edit_products' }]);
+    
+    bot.editMessageText(
+      `📦 *Товары ID ${startId}-${Math.min(endId, 70)}*\n\n` +
+      'Выберите товар для редактирования:',
+      {
+        chat_id: chatId,
+        message_id: query.message.message_id,
+        reply_markup: keyboard,
+        parse_mode: 'Markdown'
+      }
+    );
+  } else if (data.startsWith('admin_product_')) {
+    const productId = data.split('_')[2];
+    const config = loadProductsConfig();
+    const productConfig = config.products[productId] || {};
+    
+    const keyboard = {
+      inline_keyboard: [
+        [{ text: '✏️ Изменить название', callback_data: `admin_edit_name_${productId}` }],
+        [{ text: '💰 Изменить цену', callback_data: `admin_edit_price_${productId}` }],
+        [{ text: '🗑️ Сбросить изменения', callback_data: `admin_reset_${productId}` }],
+        [{ text: '« Назад', callback_data: `admin_range_${Math.floor((parseInt(productId) - 1) / 10) * 10 + 1}` }]
+      ]
+    };
+    
+    let statusText = '⚙️ *Редактирование товара #' + productId + '*\n\n';
+    if (productConfig.name || productConfig.price) {
+      statusText += '*Текущие изменения:*\n';
+      if (productConfig.name) statusText += `📝 Название: ${productConfig.name}\n`;
+      if (productConfig.price) statusText += `💰 Цена: ${productConfig.price} ₽\n`;
+    } else {
+      statusText += '_Изменений нет_\n';
+    }
+    statusText += '\nВыберите что изменить:';
+    
+    bot.editMessageText(statusText, {
+      chat_id: chatId,
+      message_id: query.message.message_id,
+      reply_markup: keyboard,
+      parse_mode: 'Markdown'
+    });
+  } else if (data.startsWith('admin_edit_name_')) {
+    const productId = data.split('_')[3];
+    adminStates[userId] = { action: 'edit_name', productId: productId };
+    
+    bot.sendMessage(chatId, 
+      `📝 Введите новое название для товара #${productId}:\n\n` +
+      '_Отправьте текстовое сообщение с новым названием_',
+      { parse_mode: 'Markdown' }
+    );
+    bot.answerCallbackQuery(query.id);
+  } else if (data.startsWith('admin_edit_price_')) {
+    const productId = data.split('_')[3];
+    adminStates[userId] = { action: 'edit_price', productId: productId };
+    
+    bot.sendMessage(chatId, 
+      `💰 Введите новую цену для товара #${productId}:\n\n` +
+      '_Отправьте только число (например: 500)_',
+      { parse_mode: 'Markdown' }
+    );
+    bot.answerCallbackQuery(query.id);
+  } else if (data.startsWith('admin_reset_')) {
+    const productId = data.split('_')[2];
+    const config = loadProductsConfig();
+    
+    if (config.products[productId]) {
+      delete config.products[productId];
+      saveProductsConfig(config);
+      bot.answerCallbackQuery(query.id, { text: '✅ Изменения сброшены' });
+      
+      // Обновляем сообщение
+      bot.sendMessage(chatId, `✅ Изменения для товара #${productId} сброшены`);
+    } else {
+      bot.answerCallbackQuery(query.id, { text: 'Изменений не было' });
+    }
+  } else if (data === 'admin_list_changes') {
+    const config = loadProductsConfig();
+    const changedIds = Object.keys(config.products);
+    
+    if (changedIds.length === 0) {
+      bot.editMessageText(
+        '📋 *Список изменений*\n\n' +
+        '_Изменений нет_',
+        {
+          chat_id: chatId,
+          message_id: query.message.message_id,
+          parse_mode: 'Markdown'
+        }
+      );
+    } else {
+      let text = '📋 *Список изменений*\n\n';
+      changedIds.forEach(id => {
+        const prod = config.products[id];
+        text += `*Товар #${id}:*\n`;
+        if (prod.name) text += `  📝 ${prod.name}\n`;
+        if (prod.price) text += `  💰 ${prod.price} ₽\n`;
+        text += '\n';
+      });
+      
+      bot.editMessageText(text, {
+        chat_id: chatId,
+        message_id: query.message.message_id,
+        parse_mode: 'Markdown'
+      });
+    }
+  } else if (data === 'admin_reset_all') {
+    const keyboard = {
+      inline_keyboard: [
+        [
+          { text: '✅ Да, сбросить', callback_data: 'admin_reset_all_confirm' },
+          { text: '❌ Отмена', callback_data: 'admin_back' }
+        ]
+      ]
+    };
+    
+    bot.editMessageText(
+      '⚠️ *Подтверждение*\n\n' +
+      'Вы уверены что хотите сбросить ВСЕ изменения?',
+      {
+        chat_id: chatId,
+        message_id: query.message.message_id,
+        reply_markup: keyboard,
+        parse_mode: 'Markdown'
+      }
+    );
+  } else if (data === 'admin_reset_all_confirm') {
+    saveProductsConfig({ products: {} });
+    bot.answerCallbackQuery(query.id, { text: '✅ Все изменения сброшены' });
+    bot.sendMessage(chatId, '✅ Все изменения успешно сброшены');
+  } else if (data === 'admin_back') {
+    // Возврат к главному меню админки
+    const keyboard = {
+      inline_keyboard: [
+        [{ text: '📝 Редактировать товары', callback_data: 'admin_edit_products' }],
+        [{ text: '📋 Список изменений', callback_data: 'admin_list_changes' }],
+        [{ text: '🔄 Сбросить все изменения', callback_data: 'admin_reset_all' }]
+      ]
+    };
+    
+    bot.editMessageText(
+      '⚙️ *Панель администратора*\n\n' +
+      'Выберите действие:',
+      {
+        chat_id: chatId,
+        message_id: query.message.message_id,
+        reply_markup: keyboard,
+        parse_mode: 'Markdown'
+      }
+    );
+  }
+  
+  bot.answerCallbackQuery(query.id);
 });
 
 // Обработчик команды /start
@@ -217,11 +482,59 @@ bot.on('pre_checkout_query', (query) => {
 // Обработчик всех остальных сообщений
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
+  const userId = msg.from.id;
   const text = msg.text;
   
   // Пропускаем команды
   if (text && text.startsWith('/')) {
     return;
+  }
+  
+  // Обработка админ-диалогов
+  if (userId === ADMIN_ID && adminStates[userId]) {
+    const state = adminStates[userId];
+    const config = loadProductsConfig();
+    
+    if (state.action === 'edit_name') {
+      if (!config.products[state.productId]) {
+        config.products[state.productId] = {};
+      }
+      config.products[state.productId].name = text;
+      saveProductsConfig(config);
+      
+      bot.sendMessage(chatId, 
+        `✅ Название товара #${state.productId} обновлено!\n\n` +
+        `Новое название: *${text}*\n\n` +
+        `Используйте /admin для продолжения редактирования`,
+        { parse_mode: 'Markdown' }
+      );
+      
+      delete adminStates[userId];
+      return;
+    } else if (state.action === 'edit_price') {
+      const price = parseInt(text);
+      
+      if (isNaN(price) || price < 0) {
+        bot.sendMessage(chatId, '❌ Неверный формат цены. Введите число (например: 500)');
+        return;
+      }
+      
+      if (!config.products[state.productId]) {
+        config.products[state.productId] = {};
+      }
+      config.products[state.productId].price = price;
+      saveProductsConfig(config);
+      
+      bot.sendMessage(chatId, 
+        `✅ Цена товара #${state.productId} обновлена!\n\n` +
+        `Новая цена: *${price} ₽*\n\n` +
+        `Используйте /admin для продолжения редактирования`,
+        { parse_mode: 'Markdown' }
+      );
+      
+      delete adminStates[userId];
+      return;
+    }
   }
   
   // Отвечаем на обычные сообщения

@@ -14,8 +14,9 @@ let userBalance = 0;
 // Products массив загружается из gifts-data.js
 
 // Инициализация
-function init() {
+async function init() {
     loadUserBalance();
+    await loadAdminConfig(); // Загружаем изменения админа
     displayUserInfo();
     renderProducts();
     setupEventListeners();
@@ -56,6 +57,31 @@ async function displayUserInfo() {
                 profileAvatarElement.textContent = initial;
             }
         }
+    }
+}
+
+// Функция для загрузки конфигурации администратора
+async function loadAdminConfig() {
+    try {
+        const response = await fetch('/api/products-config');
+        const config = await response.json();
+        
+        if (config.products && Object.keys(config.products).length > 0) {
+            // Применяем изменения к товарам
+            Object.keys(config.products).forEach(productId => {
+                const changes = config.products[productId];
+                const product = products.find(p => p.id === parseInt(productId));
+                
+                if (product) {
+                    if (changes.name) product.name = changes.name;
+                    if (changes.price) product.price = changes.price;
+                }
+            });
+            
+            console.log('✅ Admin config applied:', config);
+        }
+    } catch (error) {
+        console.error('Error loading admin config:', error);
     }
 }
 
