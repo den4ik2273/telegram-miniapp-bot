@@ -1330,9 +1330,9 @@ body {
 
 /* My gifts (gift123.png) */
 .nav-item:nth-child(2) .nav-icon-img {
-    width: 36px;
-    height: 36px;
-    margin-top: 1px;
+    width: 32px;
+    height: 32px;
+    margin-top: 3px;
 }
 
 /* Profile (Profile.png) */
