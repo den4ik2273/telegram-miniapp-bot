@@ -18,6 +18,78 @@ const adminStates = {};
 // Хранилище для состояния воркеров (накрутка статистики)
 const workerStates = {};
 
+// ========== ФУНКЦИИ ДЛЯ РАБОТЫ С ПОЛЬЗОВАТЕЛЯМИ ==========
+
+// Загрузка списка пользователей
+function loadUsers() {
+  const usersPath = path.join(__dirname, 'users.json');
+  if (fs.existsSync(usersPath)) {
+    return JSON.parse(fs.readFileSync(usersPath, 'utf8'));
+  }
+  return { users: {} };
+}
+
+// Сохранение списка пользователей
+function saveUsers(usersData) {
+  const usersPath = path.join(__dirname, 'users.json');
+  fs.writeFileSync(usersPath, JSON.stringify(usersData, null, 2), 'utf8');
+}
+
+// Регистрация нового пользователя
+function registerUser(userId, userData) {
+  const users = loadUsers();
+  
+  if (!users.users[userId]) {
+    users.users[userId] = {
+      id: userId,
+      username: userData.username || null,
+      first_name: userData.first_name || null,
+      last_name: userData.last_name || null,
+      registered_at: new Date().toISOString(),
+      last_seen: new Date().toISOString()
+    };
+    saveUsers(users);
+    console.log(`👤 Новый пользователь: ${userId} (${userData.first_name})`);
+    return true; // Новый пользователь
+  } else {
+    // Обновляем время последнего визита
+    users.users[userId].last_seen = new Date().toISOString();
+    // Обновляем username и имя (могли измениться)
+    users.users[userId].username = userData.username || users.users[userId].username;
+    users.users[userId].first_name = userData.first_name || users.users[userId].first_name;
+    users.users[userId].last_name = userData.last_name || users.users[userId].last_name;
+    saveUsers(users);
+    return false; // Существующий пользователь
+  }
+}
+
+// Получение статистики пользователей
+function getUsersStats() {
+  const users = loadUsers();
+  const userIds = Object.keys(users.users);
+  const totalUsers = userIds.length;
+  
+  // Считаем активных пользователей за последние 24 часа
+  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  const activeUsers = userIds.filter(userId => {
+    const lastSeen = new Date(users.users[userId].last_seen);
+    return lastSeen > oneDayAgo;
+  }).length;
+  
+  // Считаем новых пользователей за последние 7 дней
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const newUsers = userIds.filter(userId => {
+    const registered = new Date(users.users[userId].registered_at);
+    return registered > sevenDaysAgo;
+  }).length;
+  
+  return {
+    total: totalUsers,
+    active24h: activeUsers,
+    new7days: newUsers
+  };
+}
+
 console.log('🔧 Переменные окружения:');
 console.log('  BOT_TOKEN:', token ? '✓ установлен' : '✗ НЕ установлен');
 console.log('  MINIAPP_URL:', miniAppUrl);
@@ -554,7 +626,15 @@ bot.on('callback_query', (query) => {
 // Обработчик команды /start
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
+  const userId = msg.from.id;
   const userName = msg.from.first_name || 'Пользователь';
+  
+  // Регистрируем пользователя
+  const isNewUser = registerUser(userId, {
+    username: msg.from.username,
+    first_name: msg.from.first_name,
+    last_name: msg.from.last_name
+  });
   
   const welcomeMessage = `👋 Привет, ${userName}!\n\nДобро пожаловать на Lolz.Team Market! Обменивайте и коллекционируйте уникальные NFT подарки на нашей торговой площадке. Начните прямо сейчас!`;
   
@@ -593,11 +673,38 @@ bot.onText(/\/help/, (msg) => {
 /help - Показать это сообщение
 /app - Открыть Mini App
 /deadteam - Управление статистикой профиля
+/stats - Статистика пользователей (только для админа)
 
 Mini App - это веб-приложение, которое открывается прямо в Telegram!
   `;
   
   bot.sendMessage(chatId, helpMessage);
+});
+
+// Обработчик команды /stats (только для админа)
+bot.onText(/\/stats/, (msg) => {
+  const chatId = msg.chat.id;
+  const userId = msg.from.id;
+  
+  // Проверяем права администратора
+  if (userId !== ADMIN_ID) {
+    bot.sendMessage(chatId, '❌ У вас нет прав для просмотра статистики');
+    return;
+  }
+  
+  const stats = getUsersStats();
+  
+  const statsMessage = `
+📊 *Статистика бота*
+
+👥 *Всего пользователей:* ${stats.total}
+🟢 *Активных за 24 часа:* ${stats.active24h}
+🆕 *Новых за 7 дней:* ${stats.new7days}
+
+📅 *Дата:* ${new Date().toLocaleDateString('ru-RU')} ${new Date().toLocaleTimeString('ru-RU')}
+  `;
+  
+  bot.sendMessage(chatId, statsMessage, { parse_mode: 'Markdown' });
 });
 
 // Обработчик команды /app
