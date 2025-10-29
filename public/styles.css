@@ -1260,18 +1260,18 @@ body {
 }
 
 .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-    padding: 0px 12px;
+    position: relative;
     background: none;
     border: none;
     color: #6b6e75;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0px 12px;
     flex: 1;
-    position: relative;
+    height: 50px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .nav-item.active {
@@ -1282,13 +1282,17 @@ body {
     transform: scale(0.95);
 }
 
+/* Слой 1: Иконки (фоновый слой) */
 .nav-icon {
-    font-size: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .nav-icon-img {
-    width: 30px;
-    height: 30px;
     object-fit: contain;
     opacity: 0.4;
     filter: grayscale(1) brightness(0.7);
@@ -1296,36 +1300,36 @@ body {
     display: block;
 }
 
-/* Контейнер для иконки */
-.nav-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Индивидуальное выравнивание иконок по их визуальному центру */
+
+/* Market (logo) - 48px */
+.nav-item:first-child .nav-icon {
+    top: 1px; /* Центр на 24px от верха иконки, выравниваем по центру полоски */
 }
 
-/* Увеличиваем логотип для баланса */
 .nav-item:first-child .nav-icon-img {
     width: 48px;
     height: 48px;
 }
 
-/* Увеличиваем иконку gift123 */
+/* My gifts - 36px */
+.nav-item:nth-child(2) .nav-icon {
+    top: 7px; /* Центр на 18px от верха иконки */
+}
+
 .nav-item:nth-child(2) .nav-icon-img {
     width: 36px;
     height: 36px;
 }
 
-/* Компенсируем разницу в размере через отрицательный margin */
-.nav-item:first-child .nav-icon {
-    margin-bottom: -16px;
-}
-
-.nav-item:nth-child(2) .nav-icon {
-    margin-bottom: -8px;
-}
-
+/* Profile - 30px */
 .nav-item:nth-child(3) .nav-icon {
-    margin-bottom: -4px;
+    top: 10px; /* Центр на 15px от верха иконки */
+}
+
+.nav-item:nth-child(3) .nav-icon-img {
+    width: 30px;
+    height: 30px;
 }
 
 .nav-item.active .nav-icon-img {
@@ -1339,6 +1343,7 @@ body {
     transform: translateY(-1px);
 }
 
+/* Слой 2: Текст (верхний слой) */
 .nav-label {
     font-size: 8px;
     font-weight: 500;
@@ -1346,6 +1351,9 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     line-height: 1;
+    position: relative;
+    z-index: 1;
+    padding-bottom: 2px;
 }
 
 .nav-item.active .nav-label {
