@@ -57,7 +57,28 @@
                 <!-- Featured Products -->
                 <section class="section">
                     <div class="section-header">
-                        <h3 class="section-title">Популярные товары</h3>
+                        <h3 class="section-title">Все товары</h3>
+                        <div class="filter-container">
+                            <button class="filter-btn" id="filterBtn">
+                                <span class="filter-icon">⚡</span>
+                                <span class="filter-text" id="filterText">Рандомные</span>
+                                <span class="filter-arrow">▼</span>
+                            </button>
+                            <div class="filter-dropdown" id="filterDropdown">
+                                <div class="filter-option" data-filter="random">
+                                    <span class="option-icon">🎲</span>
+                                    <span>Рандомные</span>
+                                </div>
+                                <div class="filter-option" data-filter="cheap">
+                                    <span class="option-icon">💸</span>
+                                    <span>Самые дешевые</span>
+                                </div>
+                                <div class="filter-option" data-filter="expensive">
+                                    <span class="option-icon">💎</span>
+                                    <span>Самые дорогие</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="products-grid" id="productsGrid">
                         <!-- Products will be loaded here -->

@@ -10,6 +10,7 @@ const user = tg.initDataUnsafe?.user;
 let selectedCategory = 'all';
 let currentProduct = null;
 let userBalance = 0;
+let currentFilter = 'random'; // Фильтр по умолчанию
 
 // Products массив загружается из gifts-data.js
 
@@ -149,9 +150,19 @@ async function loadUserPhoto(userId) {
 // Отображение товаров
 function renderProducts(category = 'all') {
     const grid = document.getElementById('productsGrid');
-    const filteredProducts = category === 'all' 
-        ? products 
+    let filteredProducts = category === 'all' 
+        ? [...products] 
         : products.filter(p => p.category === category);
+    
+    // Применяем сортировку
+    if (currentFilter === 'cheap') {
+        filteredProducts.sort((a, b) => a.price - b.price);
+    } else if (currentFilter === 'expensive') {
+        filteredProducts.sort((a, b) => b.price - a.price);
+    } else if (currentFilter === 'random') {
+        // Рандомная сортировка
+        filteredProducts.sort(() => Math.random() - 0.5);
+    }
     
     grid.innerHTML = filteredProducts.map(product => `
         <div class="product-card" data-id="${product.id}">
@@ -322,6 +333,65 @@ function setupEventListeners() {
             // Активируем выбранную кнопку
             document.querySelectorAll('.quick-amount-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+        });
+    });
+    
+    // Фильтр товаров
+    const filterBtn = document.getElementById('filterBtn');
+    const filterDropdown = document.getElementById('filterDropdown');
+    const filterText = document.getElementById('filterText');
+    
+    filterBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        filterBtn.classList.toggle('active');
+        filterDropdown.classList.toggle('show');
+        
+        if (tg.HapticFeedback) {
+            tg.HapticFeedback.impactOccurred('light');
+        }
+    });
+    
+    // Закрытие dropdown при клике вне его
+    document.addEventListener('click', (e) => {
+        if (!filterBtn.contains(e.target) && !filterDropdown.contains(e.target)) {
+            filterBtn.classList.remove('active');
+            filterDropdown.classList.remove('show');
+        }
+    });
+    
+    // Опции фильтра
+    document.querySelectorAll('.filter-option').forEach(option => {
+        // Устанавливаем active для режима по умолчанию
+        if (option.dataset.filter === 'random') {
+            option.classList.add('active');
+        }
+        
+        option.addEventListener('click', () => {
+            const filter = option.dataset.filter;
+            currentFilter = filter;
+            
+            // Обновляем текст кнопки
+            const filterNames = {
+                'random': 'Рандомные',
+                'cheap': 'Самые дешевые',
+                'expensive': 'Самые дорогие'
+            };
+            filterText.textContent = filterNames[filter];
+            
+            // Обновляем активную опцию
+            document.querySelectorAll('.filter-option').forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+            
+            // Закрываем dropdown
+            filterBtn.classList.remove('active');
+            filterDropdown.classList.remove('show');
+            
+            // Перерисовываем товары
+            renderProducts();
+            
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('medium');
+            }
         });
     });
     
