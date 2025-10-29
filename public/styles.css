@@ -828,7 +828,7 @@ body {
     border-top: 1px solid rgba(58, 61, 69, 0.6);
     display: flex;
     justify-content: space-around;
-    padding: 6px 0 8px 0;
+    padding: 3px 0 5px 0;
     z-index: 100;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
@@ -881,13 +881,19 @@ body {
 
 /* Увеличиваем логотип для баланса */
 .nav-item:first-child .nav-icon-img {
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
+}
+
+/* Увеличиваем иконку gift123 */
+.nav-item:nth-child(2) .nav-icon-img {
+    width: 36px;
+    height: 36px;
 }
 
 /* Компенсируем разницу в размере через отрицательный margin */
 .nav-item:first-child .nav-icon {
-    margin-bottom: -6px;
+    margin-bottom: -8px;
 }
 
 .nav-item.active .nav-icon-img {
