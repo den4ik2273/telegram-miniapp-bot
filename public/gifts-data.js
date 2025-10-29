@@ -5,49 +5,49 @@ const products = [
     // ========== ДЕШЕВЫЕ ПОДАРКИ (50 штук) 50-1000₽ ==========
     
     // Звезды (Stars) - самые дешевые и распространенные
-    { id: 1, name: 'Green Star', price: 150, icon: '⭐', description: 'Collectible #3421', specs: { Model: 'Green Star', Backdrop: 'Emerald 45%', Issued: '3,421/10,000' } },
-    { id: 2, name: 'Blue Star', price: 160, icon: '⭐', description: 'Collectible #5234', specs: { Model: 'Blue Star', Backdrop: 'Ocean 42%', Issued: '5,234/10,000' } },
-    { id: 3, name: 'Red Star', price: 170, icon: '⭐', description: 'Collectible #4567', specs: { Model: 'Red Star', Backdrop: 'Crimson 40%', Issued: '4,567/10,000' } },
-    { id: 4, name: 'Yellow Star', price: 165, icon: '⭐', description: 'Collectible #6123', specs: { Model: 'Yellow Star', Backdrop: 'Gold 43%', Issued: '6,123/10,000' } },
-    { id: 5, name: 'Pink Star', price: 155, icon: '⭐', description: 'Collectible #5891', specs: { Model: 'Pink Star', Backdrop: 'Rose 44%', Issued: '5,891/10,000' } },
-    { id: 6, name: 'Purple Star', price: 175, icon: '⭐', description: 'Collectible #4890', specs: { Model: 'Purple Star', Backdrop: 'Violet 41%', Issued: '4,890/10,000' } },
-    { id: 7, name: 'Orange Star', price: 160, icon: '⭐', description: 'Collectible #5678', specs: { Model: 'Orange Star', Backdrop: 'Sunset 42%', Issued: '5,678/10,000' } },
-    { id: 8, name: 'White Star', price: 180, icon: '⭐', description: 'Collectible #4321', specs: { Model: 'White Star', Backdrop: 'Snow 39%', Issued: '4,321/10,000' } },
+    { id: 1, name: 'Green Star', price: 150, icon: '⭐', image: 'Подарки/загруженное (18).png', description: 'Collectible #3421', specs: { Model: 'Green Star', Backdrop: 'Emerald 45%', Issued: '3,421/10,000' } },
+    { id: 2, name: 'Blue Star', price: 160, icon: '⭐', image: 'Подарки/загруженное (7).png', description: 'Collectible #5234', specs: { Model: 'Blue Star', Backdrop: 'Ocean 42%', Issued: '5,234/10,000' } },
+    { id: 3, name: 'Red Star', price: 170, icon: '⭐', image: 'Подарки/загруженное (25).png', description: 'Collectible #4567', specs: { Model: 'Red Star', Backdrop: 'Crimson 40%', Issued: '4,567/10,000' } },
+    { id: 4, name: 'Yellow Star', price: 165, icon: '⭐', image: 'Подарки/загруженное (12).png', description: 'Collectible #6123', specs: { Model: 'Yellow Star', Backdrop: 'Gold 43%', Issued: '6,123/10,000' } },
+    { id: 5, name: 'Pink Star', price: 155, icon: '⭐', image: 'Подарки/загруженное (31).png', description: 'Collectible #5891', specs: { Model: 'Pink Star', Backdrop: 'Rose 44%', Issued: '5,891/10,000' } },
+    { id: 6, name: 'Purple Star', price: 175, icon: '⭐', image: 'Подарки/загруженное (4).png', description: 'Collectible #4890', specs: { Model: 'Purple Star', Backdrop: 'Violet 41%', Issued: '4,890/10,000' } },
+    { id: 7, name: 'Orange Star', price: 160, icon: '⭐', image: 'Подарки/загруженное (22).png', description: 'Collectible #5678', specs: { Model: 'Orange Star', Backdrop: 'Sunset 42%', Issued: '5,678/10,000' } },
+    { id: 8, name: 'White Star', price: 180, icon: '⭐', image: 'Подарки/загруженное (15).png', description: 'Collectible #4321', specs: { Model: 'White Star', Backdrop: 'Snow 39%', Issued: '4,321/10,000' } },
     
     // Воздушные шары (Balloons)
-    { id: 9, name: 'Red Balloon', price: 220, icon: '🎈', description: 'Collectible #3456', specs: { Model: 'Balloon', Backdrop: 'Red 35%', Issued: '3,456/8,000' } },
-    { id: 10, name: 'Blue Balloon', price: 210, icon: '🎈', description: 'Collectible #3789', specs: { Model: 'Balloon', Backdrop: 'Blue 36%', Issued: '3,789/8,000' } },
-    { id: 11, name: 'Green Balloon', price: 215, icon: '🎈', description: 'Collectible #3234', specs: { Model: 'Balloon', Backdrop: 'Green 35%', Issued: '3,234/8,000' } },
-    { id: 12, name: 'Yellow Balloon', price: 225, icon: '🎈', description: 'Collectible #3567', specs: { Model: 'Balloon', Backdrop: 'Yellow 34%', Issued: '3,567/8,000' } },
-    { id: 13, name: 'Pink Balloon', price: 205, icon: '🎈', description: 'Collectible #3891', specs: { Model: 'Balloon', Backdrop: 'Pink 37%', Issued: '3,891/8,000' } },
+    { id: 9, name: 'Red Balloon', price: 220, icon: '🎈', image: 'Подарки/загруженное (9).png', description: 'Collectible #3456', specs: { Model: 'Balloon', Backdrop: 'Red 35%', Issued: '3,456/8,000' } },
+    { id: 10, name: 'Blue Balloon', price: 210, icon: '🎈', image: 'Подарки/загруженное (28).png', description: 'Collectible #3789', specs: { Model: 'Balloon', Backdrop: 'Blue 36%', Issued: '3,789/8,000' } },
+    { id: 11, name: 'Green Balloon', price: 215, icon: '🎈', image: 'Подарки/загруженное (3).png', description: 'Collectible #3234', specs: { Model: 'Balloon', Backdrop: 'Green 35%', Issued: '3,234/8,000' } },
+    { id: 12, name: 'Yellow Balloon', price: 225, icon: '🎈', image: 'Подарки/загруженное (20).png', description: 'Collectible #3567', specs: { Model: 'Balloon', Backdrop: 'Yellow 34%', Issued: '3,567/8,000' } },
+    { id: 13, name: 'Pink Balloon', price: 205, icon: '🎈', image: 'Подарки/загруженное (11).png', description: 'Collectible #3891', specs: { Model: 'Balloon', Backdrop: 'Pink 37%', Issued: '3,891/8,000' } },
     
     // Сердечки (Hearts)
-    { id: 14, name: 'Red Heart', price: 280, icon: '❤️', description: 'Collectible #2345', specs: { Model: 'Heart', Backdrop: 'Red 30%', Issued: '2,345/7,000' } },
-    { id: 15, name: 'Pink Heart', price: 270, icon: '💖', description: 'Collectible #2567', specs: { Model: 'Heart', Backdrop: 'Pink 32%', Issued: '2,567/7,000' } },
-    { id: 16, name: 'Blue Heart', price: 275, icon: '💙', description: 'Collectible #2456', specs: { Model: 'Heart', Backdrop: 'Blue 31%', Issued: '2,456/7,000' } },
-    { id: 17, name: 'Purple Heart', price: 285, icon: '💜', description: 'Collectible #2678', specs: { Model: 'Heart', Backdrop: 'Purple 29%', Issued: '2,678/7,000' } },
-    { id: 18, name: 'Green Heart', price: 265, icon: '💚', description: 'Collectible #2789', specs: { Model: 'Heart', Backdrop: 'Green 33%', Issued: '2,789/7,000' } },
+    { id: 14, name: 'Red Heart', price: 280, icon: '❤️', image: 'Подарки/загруженное (26).png', description: 'Collectible #2345', specs: { Model: 'Heart', Backdrop: 'Red 30%', Issued: '2,345/7,000' } },
+    { id: 15, name: 'Pink Heart', price: 270, icon: '💖', image: 'Подарки/загруженное (14).png', description: 'Collectible #2567', specs: { Model: 'Heart', Backdrop: 'Pink 32%', Issued: '2,567/7,000' } },
+    { id: 16, name: 'Blue Heart', price: 275, icon: '💙', image: 'Подарки/загруженное (6).png', description: 'Collectible #2456', specs: { Model: 'Heart', Backdrop: 'Blue 31%', Issued: '2,456/7,000' } },
+    { id: 17, name: 'Purple Heart', price: 285, icon: '💜', image: 'Подарки/загруженное (30).png', description: 'Collectible #2678', specs: { Model: 'Heart', Backdrop: 'Purple 29%', Issued: '2,678/7,000' } },
+    { id: 18, name: 'Green Heart', price: 265, icon: '💚', image: 'Подарки/загруженное (19).png', description: 'Collectible #2789', specs: { Model: 'Heart', Backdrop: 'Green 33%', Issued: '2,789/7,000' } },
     
     // Подарочные коробки (Gift Boxes)
-    { id: 19, name: 'Red Gift Box', price: 310, icon: '🎁', description: 'Collectible #2123', specs: { Model: 'Gift Box', Backdrop: 'Red 28%', Issued: '2,123/6,500' } },
-    { id: 20, name: 'Blue Gift Box', price: 300, icon: '🎁', description: 'Collectible #2234', specs: { Model: 'Gift Box', Backdrop: 'Blue 29%', Issued: '2,234/6,500' } },
-    { id: 21, name: 'Green Gift Box', price: 305, icon: '🎁', description: 'Collectible #2345', specs: { Model: 'Gift Box', Backdrop: 'Green 28%', Issued: '2,345/6,500' } },
-    { id: 22, name: 'Purple Gift Box', price: 315, icon: '🎁', description: 'Collectible #2456', specs: { Model: 'Gift Box', Backdrop: 'Purple 27%', Issued: '2,456/6,500' } },
+    { id: 19, name: 'Red Gift Box', price: 310, icon: '🎁', image: 'Подарки/загруженное (8).png', description: 'Collectible #2123', specs: { Model: 'Gift Box', Backdrop: 'Red 28%', Issued: '2,123/6,500' } },
+    { id: 20, name: 'Blue Gift Box', price: 300, icon: '🎁', image: 'Подарки/загруженное (23).png', description: 'Collectible #2234', specs: { Model: 'Gift Box', Backdrop: 'Blue 29%', Issued: '2,234/6,500' } },
+    { id: 21, name: 'Green Gift Box', price: 305, icon: '🎁', image: 'Подарки/загруженное (1).png', description: 'Collectible #2345', specs: { Model: 'Gift Box', Backdrop: 'Green 28%', Issued: '2,345/6,500' } },
+    { id: 22, name: 'Purple Gift Box', price: 315, icon: '🎁', image: 'Подарки/загруженное (17).png', description: 'Collectible #2456', specs: { Model: 'Gift Box', Backdrop: 'Purple 27%', Issued: '2,456/6,500' } },
     
     // Цветы (Flowers)
-    { id: 23, name: 'Red Rose', price: 350, icon: '🌹', description: 'Collectible #1890', specs: { Model: 'Rose', Backdrop: 'Garden 25%', Issued: '1,890/6,000' } },
-    { id: 24, name: 'Pink Rose', price: 340, icon: '🌹', description: 'Collectible #1945', specs: { Model: 'Rose', Backdrop: 'Pink 26%', Issued: '1,945/6,000' } },
-    { id: 25, name: 'White Rose', price: 360, icon: '🌹', description: 'Collectible #1823', specs: { Model: 'Rose', Backdrop: 'Snow 24%', Issued: '1,823/6,000' } },
-    { id: 26, name: 'Sunflower', price: 380, icon: '🌻', description: 'Collectible #1678', specs: { Model: 'Sunflower', Backdrop: 'Field 22%', Issued: '1,678/5,500' } },
-    { id: 27, name: 'Cherry Blossom', price: 390, icon: '🌸', description: 'Collectible #1567', specs: { Model: 'Cherry Blossom', Backdrop: 'Spring 21%', Issued: '1,567/5,500' } },
-    { id: 28, name: 'Tulip', price: 370, icon: '🌷', description: 'Collectible #1734', specs: { Model: 'Tulip', Backdrop: 'Garden 23%', Issued: '1,734/5,500' } },
+    { id: 23, name: 'Red Rose', price: 350, icon: '🌹', image: 'Подарки/загруженное (29).png', description: 'Collectible #1890', specs: { Model: 'Rose', Backdrop: 'Garden 25%', Issued: '1,890/6,000' } },
+    { id: 24, name: 'Pink Rose', price: 340, icon: '🌹', image: 'Подарки/загруженное (10).png', description: 'Collectible #1945', specs: { Model: 'Rose', Backdrop: 'Pink 26%', Issued: '1,945/6,000' } },
+    { id: 25, name: 'White Rose', price: 360, icon: '🌹', image: 'Подарки/загруженное (5).png', description: 'Collectible #1823', specs: { Model: 'Rose', Backdrop: 'Snow 24%', Issued: '1,823/6,000' } },
+    { id: 26, name: 'Sunflower', price: 380, icon: '🌻', image: 'Подарки/загруженное (21).png', description: 'Collectible #1678', specs: { Model: 'Sunflower', Backdrop: 'Field 22%', Issued: '1,678/5,500' } },
+    { id: 27, name: 'Cherry Blossom', price: 390, icon: '🌸', image: 'Подарки/загруженное (16).png', description: 'Collectible #1567', specs: { Model: 'Cherry Blossom', Backdrop: 'Spring 21%', Issued: '1,567/5,500' } },
+    { id: 28, name: 'Tulip', price: 370, icon: '🌷', image: 'Подарки/загруженное.png', description: 'Collectible #1734', specs: { Model: 'Tulip', Backdrop: 'Garden 23%', Issued: '1,734/5,500' } },
     
     // Сладости (Sweets)
-    { id: 29, name: 'Candy', price: 420, icon: '🍬', description: 'Collectible #1456', specs: { Model: 'Candy', Backdrop: 'Sweet 20%', Issued: '1,456/5,000' } },
-    { id: 30, name: 'Lollipop', price: 430, icon: '🍭', description: 'Collectible #1389', specs: { Model: 'Lollipop', Backdrop: 'Rainbow 19%', Issued: '1,389/5,000' } },
-    { id: 31, name: 'Cookie', price: 410, icon: '🍪', description: 'Collectible #1523', specs: { Model: 'Cookie', Backdrop: 'Chocolate 21%', Issued: '1,523/5,000' } },
-    { id: 32, name: 'Cupcake', price: 450, icon: '🧁', description: 'Collectible #1345', specs: { Model: 'Cupcake', Backdrop: 'Pink 18%', Issued: '1,345/5,000' } },
-    { id: 33, name: 'Donut', price: 440, icon: '🍩', description: 'Collectible #1412', specs: { Model: 'Donut', Backdrop: 'Glazed 19%', Issued: '1,412/5,000' } },
+    { id: 29, name: 'Candy', price: 420, icon: '🍬', image: 'Подарки/загруженное (13).png', description: 'Collectible #1456', specs: { Model: 'Candy', Backdrop: 'Sweet 20%', Issued: '1,456/5,000' } },
+    { id: 30, name: 'Lollipop', price: 430, icon: '🍭', image: 'Подарки/загруженное (27).png', description: 'Collectible #1389', specs: { Model: 'Lollipop', Backdrop: 'Rainbow 19%', Issued: '1,389/5,000' } },
+    { id: 31, name: 'Cookie', price: 410, icon: '🍪', image: 'Подарки/загруженное (2).png', description: 'Collectible #1523', specs: { Model: 'Cookie', Backdrop: 'Chocolate 21%', Issued: '1,523/5,000' } },
+    { id: 32, name: 'Cupcake', price: 450, icon: '🧁', image: 'Подарки/загруженное (24).png', description: 'Collectible #1345', specs: { Model: 'Cupcake', Backdrop: 'Pink 18%', Issued: '1,345/5,000' } },
+    { id: 33, name: 'Donut', price: 440, icon: '🍩', image: 'Подарки/загруженное (32).png', description: 'Collectible #1412', specs: { Model: 'Donut', Backdrop: 'Glazed 19%', Issued: '1,412/5,000' } },
     
     // Фрукты (Fruits)
     { id: 34, name: 'Strawberry', price: 480, icon: '🍓', description: 'Collectible #1234', specs: { Model: 'Strawberry', Backdrop: 'Fresh 17%', Issued: '1,234/4,500' } },
