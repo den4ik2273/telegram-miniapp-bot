@@ -930,6 +930,28 @@ body {
     50% { transform: scale(1.1); }
 }
 
+.star-icon-large {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.star-icon-inline {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+.star-icon-button {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
 .balance-info-card h3 {
     color: var(--text-primary);
     font-size: 20px;
@@ -1200,7 +1222,7 @@ body {
 }
 
 .instruction-icon {
-    font-size: 20px;
+        font-size: 20px;
     flex-shrink: 0;
 }
 

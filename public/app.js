@@ -384,7 +384,7 @@ function updatePaymentSummary(amount) {
     const parsedAmount = parseInt(amount) || 0;
     
     document.getElementById('summaryAmount').textContent = `${parsedAmount} ₽`;
-    document.getElementById('summaryStars').textContent = `${parsedAmount} ⭐`;
+    document.getElementById('summaryStars').innerHTML = `${parsedAmount} <img src="star.png" alt="Star" class="star-icon-inline">`;
     
     const payBtn = document.getElementById('confirmPaymentBtn');
     if (parsedAmount >= 10) {
