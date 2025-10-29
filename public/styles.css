@@ -376,6 +376,16 @@ body {
     border: 1px solid var(--border-color);
     font-size: 18px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.btn-icon-only img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 /* Sections */
@@ -819,6 +829,20 @@ body {
 
 .menu-item span:first-child {
     font-size: 20px;
+}
+
+.menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+.menu-icon img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .menu-item span:nth-child(2) {
