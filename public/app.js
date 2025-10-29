@@ -158,7 +158,45 @@ function setupEventListeners() {
     
     // Кнопка пополнения баланса
     document.getElementById('addBalanceBtn').addEventListener('click', () => {
-        showAddBalanceDialog();
+        showPage('addBalancePage');
+        resetAddBalancePage();
+    });
+    
+    // Кнопка назад на странице пополнения
+    document.getElementById('addBalanceBackBtn').addEventListener('click', () => {
+        showPage('homePage');
+    });
+    
+    // Поле ввода суммы
+    document.getElementById('amountInput').addEventListener('input', (e) => {
+        updatePaymentSummary(e.target.value);
+        // Убираем активный класс с быстрых кнопок при ручном вводе
+        document.querySelectorAll('.quick-amount-btn').forEach(btn => {
+            if (btn.dataset.amount !== e.target.value) {
+                btn.classList.remove('active');
+            }
+        });
+    });
+    
+    // Быстрые кнопки сумм
+    document.querySelectorAll('.quick-amount-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const amount = btn.dataset.amount;
+            document.getElementById('amountInput').value = amount;
+            updatePaymentSummary(amount);
+            
+            // Активируем выбранную кнопку
+            document.querySelectorAll('.quick-amount-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+    
+    // Кнопка оплаты
+    document.getElementById('confirmPaymentBtn').addEventListener('click', () => {
+        const amount = parseInt(document.getElementById('amountInput').value);
+        if (amount && amount >= 10) {
+            createStarsInvoice(amount);
+        }
     });
     
     // Главная кнопка Telegram
@@ -200,55 +238,38 @@ function hideSplashScreen() {
     }, 3000);
 }
 
-// Функция для показа диалога пополнения баланса
-function showAddBalanceDialog() {
-    // Запрашиваем сумму у пользователя
-    tg.showPopup({
-        title: '💰 Пополнение баланса',
-        message: 'Введите сумму для пополнения (в рублях):',
-        buttons: [
-            { id: 'cancel', type: 'cancel' },
-            { id: 'confirm', type: 'default', text: 'Продолжить' }
-        ]
-    }, (buttonId) => {
-        if (buttonId === 'confirm') {
-            // Показываем промпт для ввода суммы
-            tg.showPopup({
-                title: 'Введите сумму',
-                message: 'Минимум: 10 ₽\nКурс: 1 ₽ = 1 ⭐',
-                buttons: [
-                    { id: 'cancel', type: 'cancel' },
-                    { id: '100', type: 'default', text: '100 ₽' },
-                    { id: '500', type: 'default', text: '500 ₽' },
-                    { id: '1000', type: 'default', text: '1000 ₽' },
-                    { id: 'custom', type: 'default', text: 'Другая сумма' }
-                ]
-            }, (selectedId) => {
-                if (selectedId && selectedId !== 'cancel') {
-                    let amount = 0;
-                    
-                    if (selectedId === 'custom') {
-                        // Для custom показываем input через prompt (так как Telegram Web App не поддерживает text input)
-                        const customAmount = prompt('Введите сумму в рублях (минимум 10 ₽):');
-                        amount = parseInt(customAmount);
-                    } else {
-                        amount = parseInt(selectedId);
-                    }
-                    
-                    if (amount && amount >= 10) {
-                        createStarsInvoice(amount);
-                    } else {
-                        tg.showAlert('Минимальная сумма пополнения: 10 ₽');
-                    }
-                }
-            });
-        }
-    });
+// Сброс страницы пополнения баланса
+function resetAddBalancePage() {
+    document.getElementById('amountInput').value = '';
+    document.querySelectorAll('.quick-amount-btn').forEach(btn => btn.classList.remove('active'));
+    updatePaymentSummary(0);
+}
+
+// Обновление суммарной информации об оплате
+function updatePaymentSummary(amount) {
+    const parsedAmount = parseInt(amount) || 0;
+    
+    document.getElementById('summaryAmount').textContent = `${parsedAmount} ₽`;
+    document.getElementById('summaryStars').textContent = `${parsedAmount} ⭐`;
+    
+    const payBtn = document.getElementById('confirmPaymentBtn');
+    if (parsedAmount >= 10) {
+        payBtn.disabled = false;
+    } else {
+        payBtn.disabled = true;
+    }
 }
 
 // Функция для создания инвойса Telegram Stars
 async function createStarsInvoice(amount) {
+    const payBtn = document.getElementById('confirmPaymentBtn');
+    const originalText = payBtn.textContent;
+    
     try {
+        // Показываем индикатор загрузки
+        payBtn.disabled = true;
+        payBtn.textContent = '⏳ Создание платежа...';
+        
         // Отправляем запрос на сервер для создания инвойса
         const response = await fetch('/api/create-invoice', {
             method: 'POST',
@@ -267,21 +288,35 @@ async function createStarsInvoice(amount) {
             // Открываем инвойс для оплаты
             tg.openInvoice(data.invoiceLink, (status) => {
                 if (status === 'paid') {
+                    // Успешная оплата
                     tg.showAlert(`✅ Баланс успешно пополнен на ${amount} ₽!`);
-                    // Обновляем баланс пользователя
                     updateUserBalance(amount);
+                    resetAddBalancePage();
+                    showPage('homePage');
+                    
+                    if (tg.HapticFeedback) {
+                        tg.HapticFeedback.notificationOccurred('success');
+                    }
                 } else if (status === 'cancelled') {
-                    tg.showAlert('Оплата отменена');
+                    tg.showAlert('❌ Оплата отменена');
+                    payBtn.disabled = false;
+                    payBtn.textContent = originalText;
                 } else if (status === 'failed') {
-                    tg.showAlert('Ошибка оплаты. Попробуйте снова.');
+                    tg.showAlert('❌ Ошибка оплаты. Попробуйте снова.');
+                    payBtn.disabled = false;
+                    payBtn.textContent = originalText;
                 }
             });
         } else {
-            tg.showAlert('Ошибка создания платежа. Попробуйте позже.');
+            tg.showAlert('❌ Ошибка создания платежа. Попробуйте позже.');
+            payBtn.disabled = false;
+            payBtn.textContent = originalText;
         }
     } catch (error) {
         console.error('Error creating invoice:', error);
-        tg.showAlert('Ошибка соединения с сервером');
+        tg.showAlert('❌ Ошибка соединения с сервером');
+        payBtn.disabled = false;
+        payBtn.textContent = originalText;
     }
 }
 

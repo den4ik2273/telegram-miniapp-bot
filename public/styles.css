@@ -888,6 +888,192 @@ body {
     color: var(--text-secondary);
 }
 
+/* Add Balance Page Styles */
+.balance-info-card {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 196, 140, 0.1) 100%);
+    border: 1px solid rgba(0, 196, 140, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.balance-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.balance-info-card h3 {
+    color: var(--text-primary);
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.balance-description {
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.balance-description strong {
+    color: var(--accent-green);
+    font-size: 18px;
+}
+
+.balance-hint {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.amount-input-section {
+    margin-bottom: 24px;
+}
+
+.input-label {
+    display: block;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.amount-input {
+    width: 100%;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px 48px 16px 16px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: all 0.3s;
+}
+
+.amount-input:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 3px rgba(0, 196, 140, 0.1);
+}
+
+.amount-input::placeholder {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.currency-symbol {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.quick-amounts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.quick-amount-btn {
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.quick-amount-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-green);
+    transform: translateY(-2px);
+}
+
+.quick-amount-btn.active {
+    background: linear-gradient(135deg, var(--accent-green), #00e5a0);
+    border-color: var(--accent-green);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 196, 140, 0.3);
+}
+
+.payment-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.summary-row:last-child {
+    margin-bottom: 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.summary-row span:last-child {
+    color: var(--accent-green);
+}
+
+.btn-pay {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent-green), #00e5a0);
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0, 196, 140, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-pay:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 196, 140, 0.5);
+}
+
+.btn-pay:active:not(:disabled) {
+    transform: translateY(0px);
+}
+
+.btn-pay:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--bg-hover);
+    box-shadow: none;
+}
+
 /* Bottom Navigation */
 .bottom-nav {
     position: fixed;

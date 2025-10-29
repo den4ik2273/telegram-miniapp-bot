@@ -133,6 +133,56 @@
                 </div>
             </div>
 
+            <!-- Add Balance Page -->
+            <div class="page" id="addBalancePage">
+                <button class="back-btn" id="addBalanceBackBtn">← Назад</button>
+                <h2 class="page-title">💰 Пополнение баланса</h2>
+                
+                <div class="balance-info-card">
+                    <div class="balance-icon">⭐</div>
+                    <h3>Telegram Stars</h3>
+                    <p class="balance-description">Курс обмена: <strong>1 ₽ = 1 ⭐</strong></p>
+                    <p class="balance-hint">Минимальная сумма: 10 ₽</p>
+                </div>
+
+                <div class="amount-input-section">
+                    <label for="amountInput" class="input-label">Сумма пополнения (₽)</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="number" 
+                            id="amountInput" 
+                            class="amount-input" 
+                            placeholder="Введите сумму"
+                            min="10"
+                            step="1"
+                        >
+                        <span class="currency-symbol">₽</span>
+                    </div>
+                </div>
+
+                <div class="quick-amounts">
+                    <button class="quick-amount-btn" data-amount="100">100 ₽</button>
+                    <button class="quick-amount-btn" data-amount="500">500 ₽</button>
+                    <button class="quick-amount-btn" data-amount="1000">1000 ₽</button>
+                    <button class="quick-amount-btn" data-amount="5000">5000 ₽</button>
+                </div>
+
+                <div class="payment-summary">
+                    <div class="summary-row">
+                        <span>Сумма:</span>
+                        <span id="summaryAmount">0 ₽</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Звезды:</span>
+                        <span id="summaryStars">0 ⭐</span>
+                    </div>
+                </div>
+
+                <button class="btn-pay" id="confirmPaymentBtn" disabled>
+                    ⭐ Оплатить
+                </button>
+            </div>
+
             <!-- Profile Page -->
             <div class="page" id="profilePage">
                 <button class="back-btn" id="profileBackBtn">← Назад</button>
