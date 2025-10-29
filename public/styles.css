@@ -828,7 +828,7 @@ body {
     border-top: 1px solid rgba(58, 61, 69, 0.6);
     display: flex;
     justify-content: space-around;
-    padding: 2px 0 3px 0;
+    padding: 1px 0 1px 0;
     z-index: 100;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }
@@ -837,8 +837,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
-    padding: 2px 12px;
+    gap: 1px;
+    padding: 0px 12px;
     background: none;
     border: none;
     color: #6b6e75;
@@ -891,10 +891,14 @@ body {
 
 /* Компенсируем разницу в размере через отрицательный margin */
 .nav-item:first-child .nav-icon {
-    margin-bottom: -12px;
+    margin-bottom: -16px;
 }
 
 .nav-item:nth-child(2) .nav-icon {
+    margin-bottom: -8px;
+}
+
+.nav-item:nth-child(3) .nav-icon {
     margin-bottom: -4px;
 }
 
@@ -910,11 +914,12 @@ body {
 }
 
 .nav-label {
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 500;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.1px;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1;
 }
 
 .nav-item.active .nav-label {
