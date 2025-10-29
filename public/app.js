@@ -256,7 +256,7 @@ function setupEventListeners() {
     // Кнопка покупки
     document.getElementById('buyBtn').addEventListener('click', () => {
         if (currentProduct) {
-            tg.showAlert(`${currentProduct.name}\n\nПокупка товаров будет доступна в следующем обновлении! 🎁`);
+            tg.showAlert(`❌ Недостаточно средств\n\nДля покупки "${currentProduct.name}" требуется ${currentProduct.price} ₽\n\nВаш баланс: ${userBalance} ₽\n\nПополните баланс через кнопку "💰 Пополнить баланс"`);
         }
     });
     
