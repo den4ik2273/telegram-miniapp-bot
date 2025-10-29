@@ -507,12 +507,14 @@ body {
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
+    background: rgba(42, 45, 53, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 196, 140, 0.3);
     border-radius: 12px;
     padding: 6px;
     min-width: 180px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(58, 61, 69, 0.4);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
