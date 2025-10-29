@@ -556,6 +556,13 @@ body {
     border: 1px solid var(--border-color);
 }
 
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: var(--border-radius);
+}
+
 .product-badges {
     position: absolute;
     top: 12px;

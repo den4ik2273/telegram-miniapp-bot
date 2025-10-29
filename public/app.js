@@ -79,7 +79,14 @@ function showProduct(productId) {
     
     document.getElementById('productTitle').textContent = currentProduct.name;
     document.getElementById('productPrice').textContent = `${currentProduct.price} ₽`;
-    document.getElementById('productImage').textContent = currentProduct.icon;
+    
+    // Отображаем изображение или иконку
+    const productImageEl = document.getElementById('productImage');
+    if (currentProduct.image) {
+        productImageEl.innerHTML = `<img src="${currentProduct.image}" alt="${currentProduct.name}" class="product-nft-image">`;
+    } else {
+        productImageEl.textContent = currentProduct.icon;
+    }
     
     // Характеристики
     const specsHtml = Object.entries(currentProduct.specs).map(([key, value]) => `
