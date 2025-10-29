@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 :root {
     /* Цветовая палитра Lolz.Market */
     --bg-primary: #1a1d24;
@@ -31,6 +37,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     padding-bottom: 70px;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 /* Splash Screen */
@@ -885,6 +894,8 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
+    width: 100%;
+    margin: 0;
     background: rgba(42, 45, 53, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
