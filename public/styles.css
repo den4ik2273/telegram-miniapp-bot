@@ -1162,86 +1162,20 @@ body {
     }
 }
 
-.modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.2s;
-}
-
-.modal-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
 .gift-modal-banner {
-    background: linear-gradient(135deg, #00c48c 0%, #00a577 100%);
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
-.modal-banner-logo {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-    z-index: 2;
-    position: relative;
-}
-
-.banner-stars {
-    position: absolute;
-    color: white;
-    font-size: 24px;
-    opacity: 0.3;
-    animation: twinkle 2s ease-in-out infinite;
-}
-
-.banner-stars:nth-child(2) {
-    top: 20px;
-    left: 30px;
-}
-
-.banner-stars.star-2 {
-    bottom: 30px;
-    right: 40px;
-    animation-delay: 1s;
-}
-
-@keyframes twinkle {
-    0%, 100% { opacity: 0.3; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.2); }
+.modal-banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .gift-modal-content {
     padding: 20px;
-}
-
-.gift-transfer-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 0;
-    overflow: hidden;
-    margin-bottom: 18px;
-}
-
-.gift-banner-image {
-    width: 100%;
-    height: auto;
-    display: block;
 }
 
 .gift-instructions {
