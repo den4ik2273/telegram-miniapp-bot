@@ -1143,8 +1143,8 @@ body {
 
 .gift-modal {
     background: var(--bg-secondary);
-    border-radius: 20px;
-    max-width: 400px;
+    border-radius: 16px;
+    max-width: 360px;
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -1183,8 +1183,8 @@ body {
 }
 
 .gift-modal-banner {
-    background: linear-gradient(135deg, #54A9EB 0%, #3B8DD6 100%);
-    height: 140px;
+    background: linear-gradient(135deg, #00c48c 0%, #00a577 100%);
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1193,8 +1193,8 @@ body {
 }
 
 .modal-banner-logo {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
     filter: brightness(0) invert(1);
     z-index: 2;
@@ -1226,24 +1226,24 @@ body {
 }
 
 .gift-modal-content {
-    padding: 24px;
+    padding: 20px;
 }
 
 .gift-transfer-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 12px;
+    gap: 12px;
+    margin-bottom: 10px;
 }
 
 .transfer-icon {
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1270,23 +1270,23 @@ body {
 .gift-transfer-labels {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
 }
 
 .transfer-label {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
     font-weight: 500;
 }
 
 .gift-instructions {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .instruction-item {
     display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
 .instruction-item:last-child {
@@ -1294,7 +1294,7 @@ body {
 }
 
 .instruction-icon {
-    font-size: 24px;
+    font-size: 20px;
     flex-shrink: 0;
 }
 
@@ -1305,18 +1305,18 @@ body {
 .instruction-text strong {
     display: block;
     color: var(--text-primary);
-    font-size: 14px;
-    margin-bottom: 4px;
+    font-size: 13px;
+    margin-bottom: 3px;
 }
 
 .instruction-text p {
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 12px;
     margin: 0;
 }
 
 .instruction-text a {
-    color: #54A9EB;
+    color: var(--accent-green);
     text-decoration: none;
 }
 
@@ -1325,9 +1325,9 @@ body {
     background: white;
     color: #1a1d24;
     border: none;
-    padding: 16px;
-    border-radius: 12px;
-    font-size: 16px;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
