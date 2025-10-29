@@ -251,10 +251,22 @@ function setupEventListeners() {
     
     // Кнопка "Как добавить подарок?"
     document.getElementById('howToAddGiftBtn').addEventListener('click', () => {
-        tg.showAlert('💝 Как получить подарки:\n\n1. Пополните баланс через Telegram Stars\n2. Выберите понравившийся NFT подарок в каталоге\n3. Купите его - и он появится в разделе "My gifts"\n4. Дарите друзьям или коллекционируйте! 🎁');
+        openGiftModal();
         
         if (tg.HapticFeedback) {
             tg.HapticFeedback.impactOccurred('light');
+        }
+    });
+    
+    // Закрытие модального окна
+    document.getElementById('closeGiftModal').addEventListener('click', () => {
+        closeGiftModal();
+    });
+    
+    // Закрытие по клику на overlay
+    document.getElementById('giftModalOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'giftModalOverlay') {
+            closeGiftModal();
         }
     });
     
@@ -422,6 +434,20 @@ function updateUserBalance(amount) {
     saveUserBalance();
     updateBalanceDisplay();
     console.log('✅ Balance updated:', userBalance, '₽');
+}
+
+// Функция для открытия модального окна с инструкцией
+function openGiftModal() {
+    const modal = document.getElementById('giftModalOverlay');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Функция для закрытия модального окна
+function closeGiftModal() {
+    const modal = document.getElementById('giftModalOverlay');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 // Инициализация при загрузке
