@@ -870,13 +870,11 @@ body {
     display: block;
 }
 
-/* Контейнер для иконки с фиксированной высотой */
+/* Контейнер для иконки */
 .nav-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 36px;
-    width: 36px;
 }
 
 /* Увеличиваем логотип для баланса */
@@ -893,7 +891,11 @@ body {
 
 /* Компенсируем разницу в размере через отрицательный margin */
 .nav-item:first-child .nav-icon {
-    margin-bottom: -8px;
+    margin-bottom: -12px;
+}
+
+.nav-item:nth-child(2) .nav-icon {
+    margin-bottom: -4px;
 }
 
 .nav-item.active .nav-icon-img {
@@ -908,7 +910,7 @@ body {
 }
 
 .nav-label {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 500;
     letter-spacing: 0.2px;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
