@@ -13,14 +13,14 @@ let currentProduct = null;
 
 // Примерные товары
 const products = [
-    { id: 1, name: 'Steam Аккаунт', price: 500, category: 'accounts', seller: 'TopSeller', rating: 4.9, icon: '🎮', description: 'Аккаунт Steam с играми', specs: { Игр: '50+', Уровень: '20', Статус: 'Активен' } },
-    { id: 2, name: 'Discord Nitro', price: 350, category: 'services', seller: 'FastDelivery', rating: 4.8, icon: '💬', description: 'Discord Nitro на 1 месяц', specs: { Срок: '1 месяц', Доставка: 'Моментально', Гарантия: '7 дней' } },
-    { id: 3, name: 'Spotify Premium', price: 200, category: 'services', seller: 'MusicShop', rating: 4.7, icon: '🎵', description: 'Подписка Spotify Premium', specs: { Срок: '1 месяц', Страна: 'RU', Гарантия: '30 дней' } },
-    { id: 4, name: 'Minecraft Account', price: 450, category: 'games', seller: 'GameStore', rating: 4.9, icon: '⛏️', description: 'Лицензионный аккаунт Minecraft', specs: { Доступ: 'Полный', Версия: 'Java Edition', Статус: 'Активен' } },
-    { id: 5, name: 'VPN Premium', price: 300, category: 'software', seller: 'SecureNet', rating: 4.6, icon: '🔒', description: 'VPN подписка на 1 месяц', specs: { Срок: '1 месяц', Скорость: 'Безлимит', Серверы: '50+' } },
-    { id: 6, name: 'ChatGPT Plus', price: 800, category: 'services', seller: 'AIShop', rating: 4.9, icon: '🤖', description: 'Подписка ChatGPT Plus', specs: { Срок: '1 месяц', Модель: 'GPT-4', Статус: 'Активна' } },
-    { id: 7, name: 'Adobe Account', price: 1200, category: 'software', seller: 'CreativeStore', rating: 4.8, icon: '🎨', description: 'Adobe Creative Cloud', specs: { Срок: '1 год', Программы: 'Все', Обновления: 'Автоматические' } },
-    { id: 8, name: 'YouTube Premium', price: 250, category: 'services', seller: 'MediaHub', rating: 4.7, icon: '📺', description: 'YouTube Premium подписка', specs: { Срок: '1 месяц', Реклама: 'Отключена', Музыка: 'Включена' } },
+    { id: 1, name: 'Steam Аккаунт', price: 500, category: 'accounts', icon: '🎮', description: 'Аккаунт Steam с играми', specs: { Игр: '50+', Уровень: '20', Статус: 'Активен' } },
+    { id: 2, name: 'Discord Nitro', price: 350, category: 'services', icon: '💬', description: 'Discord Nitro на 1 месяц', specs: { Срок: '1 месяц', Доставка: 'Моментально', Гарантия: '7 дней' } },
+    { id: 3, name: 'Spotify Premium', price: 200, category: 'services', icon: '🎵', description: 'Подписка Spotify Premium', specs: { Срок: '1 месяц', Страна: 'RU', Гарантия: '30 дней' } },
+    { id: 4, name: 'Minecraft Account', price: 450, category: 'games', icon: '⛏️', description: 'Лицензионный аккаунт Minecraft', specs: { Доступ: 'Полный', Версия: 'Java Edition', Статус: 'Активен' } },
+    { id: 5, name: 'VPN Premium', price: 300, category: 'software', icon: '🔒', description: 'VPN подписка на 1 месяц', specs: { Срок: '1 месяц', Скорость: 'Безлимит', Серверы: '50+' } },
+    { id: 6, name: 'ChatGPT Plus', price: 800, category: 'services', icon: '🤖', description: 'Подписка ChatGPT Plus', specs: { Срок: '1 месяц', Модель: 'GPT-4', Статус: 'Активна' } },
+    { id: 7, name: 'Adobe Account', price: 1200, category: 'software', icon: '🎨', description: 'Adobe Creative Cloud', specs: { Срок: '1 год', Программы: 'Все', Обновления: 'Автоматические' } },
+    { id: 8, name: 'YouTube Premium', price: 250, category: 'services', icon: '📺', description: 'YouTube Premium подписка', specs: { Срок: '1 месяц', Реклама: 'Отключена', Музыка: 'Включена' } },
 ];
 
 // Инициализация
@@ -67,10 +67,8 @@ function renderProducts(category = 'all') {
                 ${product.icon}
             </div>
             <div class="product-name">${product.name}</div>
-            <div class="product-seller-name">👤 ${product.seller}</div>
             <div class="product-bottom">
                 <div class="product-price-value">${product.price} ₽</div>
-                <div class="product-rating">⭐ ${product.rating}</div>
             </div>
         </div>
     `).join('');
@@ -185,22 +183,6 @@ function showCart() {
 
 // Настройка обработчиков событий
 function setupEventListeners() {
-    // Категории
-    document.querySelectorAll('.category-item').forEach(item => {
-        item.addEventListener('click', () => {
-            document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-            
-            const category = item.dataset.category;
-            selectedCategory = category;
-            renderProducts(category);
-            
-            if (tg.HapticFeedback) {
-                tg.HapticFeedback.impactOccurred('light');
-            }
-        });
-    });
-    
     // Навигация
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', () => {
