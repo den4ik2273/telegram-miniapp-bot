@@ -47,6 +47,40 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// API endpoint для создания инвойса Telegram Stars
+app.post('/api/create-invoice', async (req, res) => {
+  try {
+    const { amount, userId } = req.body;
+    
+    if (!amount || amount < 10) {
+      return res.json({ success: false, error: 'Invalid amount' });
+    }
+    
+    // Создаем инвойс для Telegram Stars
+    // 1 рубль = 1 звезда
+    const starsAmount = amount;
+    
+    const invoice = await bot.createInvoiceLink(
+      `Пополнение баланса на ${amount} ₽`, // title
+      `Пополнение внутреннего баланса аккаунта`, // description
+      `balance_${userId}_${Date.now()}`, // payload
+      '', // provider_token (пустой для Stars)
+      'XTR', // currency (XTR = Telegram Stars)
+      [{ label: `${amount} ₽`, amount: starsAmount }] // prices
+    );
+    
+    console.log(`💰 Created invoice for ${amount} stars (${amount} ₽) for user ${userId}`);
+    
+    res.json({
+      success: true,
+      invoiceLink: invoice
+    });
+  } catch (error) {
+    console.error('Error creating invoice:', error);
+    res.json({ success: false, error: error.message });
+  }
+});
+
 // Главная страница Mini App
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -110,6 +144,34 @@ bot.onText(/\/app/, (msg) => {
   bot.sendMessage(chatId, 'Нажмите кнопку для открытия приложения:', {
     reply_markup: keyboard
   });
+});
+
+// Обработчик успешной оплаты
+bot.on('successful_payment', (msg) => {
+  const chatId = msg.chat.id;
+  const payment = msg.successful_payment;
+  
+  console.log('✅ Successful payment received:', payment);
+  
+  // Извлекаем сумму из invoice_payload
+  const payload = payment.invoice_payload;
+  const amount = parseInt(payment.total_amount);
+  
+  bot.sendMessage(chatId, `✅ Оплата успешно получена!\n\n💰 Ваш баланс пополнен на ${amount} ₽\n⭐ Списано звезд: ${amount}\n\nСпасибо за пополнение!`);
+});
+
+// Обработчик pre_checkout запроса (обязателен для оплаты)
+bot.on('pre_checkout_query', (query) => {
+  console.log('💳 Pre-checkout query received:', query);
+  
+  // Подтверждаем платеж
+  bot.answerPreCheckoutQuery(query.id, true)
+    .then(() => {
+      console.log('✅ Pre-checkout query answered successfully');
+    })
+    .catch((error) => {
+      console.error('❌ Error answering pre-checkout query:', error);
+    });
 });
 
 // Обработчик всех остальных сообщений

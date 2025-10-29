@@ -7,7 +7,6 @@ tg.ready();
 const user = tg.initDataUnsafe?.user;
 
 // Состояние приложения
-let cart = [];
 let selectedCategory = 'all';
 let currentProduct = null;
 
@@ -18,7 +17,6 @@ function init() {
     displayUserInfo();
     renderProducts();
     setupEventListeners();
-    updateCartBadge();
 }
 
 // Отображение информации о пользователе
@@ -124,59 +122,6 @@ function showPage(pageId) {
     window.scrollTo(0, 0);
 }
 
-// Добавить в корзину
-function addToCart(product) {
-    cart.push(product);
-    updateCartBadge();
-    tg.showAlert(`${product.name} добавлен в корзину! 🛒`);
-    
-    if (tg.HapticFeedback) {
-        tg.HapticFeedback.notificationOccurred('success');
-    }
-}
-
-// Обновить счетчик корзины
-function updateCartBadge() {
-    const badge = document.getElementById('cartBadge');
-    badge.textContent = cart.length;
-    badge.style.display = cart.length > 0 ? 'flex' : 'none';
-}
-
-// Показать корзину
-function showCart() {
-    const cartItems = document.getElementById('cartItems');
-    const cartSummary = document.getElementById('cartSummary');
-    
-    if (cart.length === 0) {
-        cartItems.innerHTML = `
-            <div class="empty-state">
-                <span class="empty-icon">🛒</span>
-                <p>Корзина пуста</p>
-                <button class="btn-primary" onclick="showPage('homePage')">Продолжить покупки</button>
-            </div>
-        `;
-        cartSummary.style.display = 'none';
-    } else {
-        // Отображаем товары в корзине
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-        cartItems.innerHTML = cart.map(item => `
-            <div class="cart-item">
-                <span>${item.icon}</span>
-                <div>
-                    <div>${item.name}</div>
-                    <div>${item.price} ₽</div>
-                </div>
-            </div>
-        `).join('');
-        
-        document.getElementById('cartSubtotal').textContent = `${total} ₽`;
-        document.getElementById('cartTotal').textContent = `${total} ₽`;
-        cartSummary.style.display = 'block';
-    }
-    
-    showPage('cartPage');
-}
-
 // Настройка обработчиков событий
 function setupEventListeners() {
     // Навигация
@@ -207,18 +152,13 @@ function setupEventListeners() {
     // Кнопка покупки
     document.getElementById('buyBtn').addEventListener('click', () => {
         if (currentProduct) {
-            addToCart(currentProduct);
+            tg.showAlert(`${currentProduct.name}\n\nПокупка товаров будет доступна в следующем обновлении! 🎁`);
         }
     });
     
-    // Кнопка корзины в header
-    document.getElementById('cartBtn').addEventListener('click', () => {
-        showCart();
-    });
-    
-    // Кнопка поиска
-    document.getElementById('searchBtn').addEventListener('click', () => {
-        tg.showAlert('Функция поиска в разработке 🔍');
+    // Кнопка пополнения баланса
+    document.getElementById('addBalanceBtn').addEventListener('click', () => {
+        showAddBalanceDialog();
     });
     
     // Главная кнопка Telegram
@@ -258,6 +198,101 @@ function hideSplashScreen() {
         splashScreen.classList.add('hidden');
         mainApp.style.opacity = '1';
     }, 3000);
+}
+
+// Функция для показа диалога пополнения баланса
+function showAddBalanceDialog() {
+    // Запрашиваем сумму у пользователя
+    tg.showPopup({
+        title: '💰 Пополнение баланса',
+        message: 'Введите сумму для пополнения (в рублях):',
+        buttons: [
+            { id: 'cancel', type: 'cancel' },
+            { id: 'confirm', type: 'default', text: 'Продолжить' }
+        ]
+    }, (buttonId) => {
+        if (buttonId === 'confirm') {
+            // Показываем промпт для ввода суммы
+            tg.showPopup({
+                title: 'Введите сумму',
+                message: 'Минимум: 10 ₽\nКурс: 1 ₽ = 1 ⭐',
+                buttons: [
+                    { id: 'cancel', type: 'cancel' },
+                    { id: '100', type: 'default', text: '100 ₽' },
+                    { id: '500', type: 'default', text: '500 ₽' },
+                    { id: '1000', type: 'default', text: '1000 ₽' },
+                    { id: 'custom', type: 'default', text: 'Другая сумма' }
+                ]
+            }, (selectedId) => {
+                if (selectedId && selectedId !== 'cancel') {
+                    let amount = 0;
+                    
+                    if (selectedId === 'custom') {
+                        // Для custom показываем input через prompt (так как Telegram Web App не поддерживает text input)
+                        const customAmount = prompt('Введите сумму в рублях (минимум 10 ₽):');
+                        amount = parseInt(customAmount);
+                    } else {
+                        amount = parseInt(selectedId);
+                    }
+                    
+                    if (amount && amount >= 10) {
+                        createStarsInvoice(amount);
+                    } else {
+                        tg.showAlert('Минимальная сумма пополнения: 10 ₽');
+                    }
+                }
+            });
+        }
+    });
+}
+
+// Функция для создания инвойса Telegram Stars
+async function createStarsInvoice(amount) {
+    try {
+        // Отправляем запрос на сервер для создания инвойса
+        const response = await fetch('/api/create-invoice', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                amount: amount,
+                userId: user?.id || 'unknown'
+            })
+        });
+
+        const data = await response.json();
+        
+        if (data.success && data.invoiceLink) {
+            // Открываем инвойс для оплаты
+            tg.openInvoice(data.invoiceLink, (status) => {
+                if (status === 'paid') {
+                    tg.showAlert(`✅ Баланс успешно пополнен на ${amount} ₽!`);
+                    // Обновляем баланс пользователя
+                    updateUserBalance(amount);
+                } else if (status === 'cancelled') {
+                    tg.showAlert('Оплата отменена');
+                } else if (status === 'failed') {
+                    tg.showAlert('Ошибка оплаты. Попробуйте снова.');
+                }
+            });
+        } else {
+            tg.showAlert('Ошибка создания платежа. Попробуйте позже.');
+        }
+    } catch (error) {
+        console.error('Error creating invoice:', error);
+        tg.showAlert('Ошибка соединения с сервером');
+    }
+}
+
+// Функция для обновления баланса пользователя
+function updateUserBalance(amount) {
+    const balanceElement = document.querySelector('.balance-amount');
+    if (balanceElement) {
+        const currentBalance = parseInt(balanceElement.textContent) || 0;
+        const newBalance = currentBalance + amount;
+        balanceElement.textContent = `${newBalance} ₽`;
+    }
 }
 
 // Инициализация при загрузке

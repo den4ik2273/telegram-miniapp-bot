@@ -291,6 +291,31 @@ body {
     border-color: var(--accent-green);
 }
 
+.btn-add-balance {
+    background: linear-gradient(135deg, var(--accent-green), #00e5a0);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 196, 140, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-add-balance:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 196, 140, 0.4);
+}
+
+.btn-add-balance:active {
+    transform: translateY(0px);
+}
+
 .badge {
     position: absolute;
     top: -5px;
