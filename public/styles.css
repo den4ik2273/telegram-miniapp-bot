@@ -1337,9 +1337,9 @@ body {
 
 /* Profile (Profile.png) */
 .nav-item:nth-child(3) .nav-icon-img {
-    width: 32px;
-    height: 32px;
-    margin-top: 3px;
+    width: 36px;
+    height: 36px;
+    margin-top: 1px;
 }
 
 /* Активное состояние */
