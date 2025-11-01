@@ -1321,15 +1321,9 @@ body {
 .faq-header h3 {
     font-size: 18px;
     font-weight: 700;
-    color: var(--text-primary);
+    color: #ffffff;
     margin: 0;
     text-shadow: 0 0 10px rgba(0, 196, 140, 0.3);
-    animation: faqHeaderPulse 2s ease-in-out infinite;
-}
-
-@keyframes faqHeaderPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
 }
 
 .faq-close-btn {
