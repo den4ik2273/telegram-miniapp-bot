@@ -344,6 +344,27 @@ function setupEventListeners() {
         }
     });
     
+    // Кнопка FAQ
+    document.getElementById('faqBtn').addEventListener('click', () => {
+        openFaqModal();
+        
+        if (tg.HapticFeedback) {
+            tg.HapticFeedback.impactOccurred('light');
+        }
+    });
+    
+    // Закрытие FAQ модального окна
+    document.getElementById('closeFaqModal').addEventListener('click', () => {
+        closeFaqModal();
+    });
+    
+    // Закрытие FAQ по клику на overlay
+    document.getElementById('faqModalOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'faqModalOverlay') {
+            closeFaqModal();
+        }
+    });
+    
     // Закрытие модального окна
     document.getElementById('closeGiftModal').addEventListener('click', () => {
         closeGiftModal();
@@ -593,6 +614,28 @@ function closeGiftModal() {
     const modal = document.getElementById('giftModalOverlay');
     modal.classList.remove('active');
     document.body.style.overflow = '';
+}
+
+// Функция для открытия FAQ модального окна
+function openFaqModal() {
+    const modal = document.getElementById('faqModalOverlay');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    if (tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('medium');
+    }
+}
+
+// Функция для закрытия FAQ модального окна
+function closeFaqModal() {
+    const modal = document.getElementById('faqModalOverlay');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    if (tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('light');
+    }
 }
 
 // Инициализация при загрузке
