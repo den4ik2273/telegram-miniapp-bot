@@ -1370,7 +1370,6 @@ body {
 .faq-item:nth-child(4) { animation-delay: 0.4s; }
 .faq-item:nth-child(5) { animation-delay: 0.5s; }
 .faq-item:nth-child(6) { animation-delay: 0.6s; }
-.faq-item:nth-child(7) { animation-delay: 0.7s; }
 
 @keyframes faqItemSlideIn {
     from {
